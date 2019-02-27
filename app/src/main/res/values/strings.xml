@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Beer lovers</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_search">Search</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_tasted">Tasted</string>
+    <string name="search_hint">Search Beer</string>
     <!--colocar no gradle depois a key-->
     <string name="AD_KEY">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="beer_image">Beer Image</string>
 </resources>

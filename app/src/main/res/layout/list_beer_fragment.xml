@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-    tools:context=".ListBeerFragment"
-    tools:listitem="@layout/item_list_beer" />
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <br.com.zup.multistatelayout.MultiStateLayout
+        android:id="@+id/msl_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:msl_state="content"
+        app:msl_emptyLayout="@layout/ms_empty_view"
+        app:msl_errorLayout="@layout/ms_error_view"
+        app:msl_loadingLayout="@layout/ms_loading_view">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:context=".view.ListBeerFragment"
+            tools:listitem="@layout/item_list_beer" />
+    </br.com.zup.multistatelayout.MultiStateLayout>
+</layout>

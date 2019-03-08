@@ -1,4 +1,4 @@
-package com.example.beerlovers;
+package com.example.beerlovers.view;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.SearchView;
 
+import com.example.beerlovers.R;
 import com.example.beerlovers.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     fragment = ListBeerFragment.newInstance();
-
 
                 case R.id.navigation_dashboard:
                     fragment = ListBeerFragment.newInstance();
@@ -51,19 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
-
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryHint(getString(R.string.search_hint));
-        return true;
-    }
 
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
@@ -75,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-
 
 }
 

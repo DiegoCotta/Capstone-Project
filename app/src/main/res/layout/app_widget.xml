@@ -1,0 +1,79 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/appwidget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/ivBeer"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/beer_image"
+        android:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/ivBeer"
+            android:layout_toStartOf="@+id/ib_next"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            tools:text="Title dfhasd" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/tvTitle"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="6dp"
+            android:layout_toEndOf="@+id/ivBeer"
+            android:layout_toStartOf="@+id/ib_next"
+            android:ellipsize="end"
+            android:scrollbars="vertical"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vulputate suscipit mauris ac blandit. Nulla facilisi. Suspendisse felis neque, egestas quis rhoncus consequat, mollis et leo. Suspendisse potenti. Ut venenatis, mauris eu faucibus luctus, urna quam consequat nisl, eget hendrerit sapien orci vitae sem. Quisque id elit efficitur ligula porta facilisis congue vitae magna. In urna sem, vulputate ut vestibulum id, dignissim vitae magna.
+
+Integer venenatis feugiat nisi, et commodo ante venenatis ut. In quis nibh dignissim risus imperdiet bibendum ut vitae sapien. Nam imperdiet euismod blandit. Ut eleifend sapien eget dui molestie, nec placerat nisi rhoncus. Donec sed convallis lacus. Aenean auctor viverra laoreet. Vestibulum ac nisi at nulla efficitur accumsan. Aenean scelerisque in sapien consectetur efficitur. Curabitur pretium fermentum elementum. Nullam mattis, tellus a aliquet fringilla, nisi erat egestas urna, vitae suscipit lorem nisi in mi. Donec ac porttitor leo, non mattis diam. Integer interdum metus ex, vel accumsan mauris suscipit et.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vulputate suscipit mauris ac blandit. Nulla facilisi. Suspendisse felis neque, egestas quis rhoncus consequat, mollis et leo. Suspendisse potenti. Ut venenatis, mauris eu faucibus luctus, urna quam consequat nisl, eget hendrerit sapien orci vitae sem. Quisque id elit efficitur ligula porta facilisis congue vitae magna. In urna sem, vulputate ut vestibulum id, dignissim vitae magna.
+
+Integer venenatis feugiat nisi, et commodo ante venenatis ut. In quis nibh dignissim risus imperdiet bibendum ut vitae sapien. Nam imperdiet euismod blandit. Ut eleifend sapien eget dui molestie, nec placerat nisi rhoncus. Donec sed convallis lacus. Aenean auctor viverra laoreet. Vestibulum ac nisi at nulla efficitur accumsan. Aenean scelerisque in sapien consectetur efficitur. Curabitur pretium fermentum elementum. Nullam mattis, tellus a aliquet fringilla, nisi erat egestas urna, vitae suscipit lorem nisi in mi. Donec ac porttitor leo, non mattis diam. Integer interdum metus ex, vel accumsan mauris suscipit et."
+            android:textColor="@color/colorAccentText"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ib_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:background="@color/colorWhite"
+        android:padding="5dp"
+        android:src="@drawable/ic_arrow_forward"
+        android:tint="@color/colorAccentText" />
+
+</LinearLayout>

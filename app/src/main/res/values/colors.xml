@@ -13,4 +13,7 @@
     <color name="colorGrey500">#9e9e9e</color>
     <color name="colorGrey700">#616161</color>
     <color name="colorWhiteAlpha">#99ffffff</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorAlert">#CF1A1A</color>
+    <color name="colorOrganicBeer">#008000</color>
 </resources>

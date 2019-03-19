@@ -28,10 +28,8 @@ public class Beer implements Parcelable {
     private float styleId;
     private String isOrganic;
     private String isRetired;
-    @Ignore
-    @SerializedName("labels")
-    Labels LabelsObject;
     private String status;
+    private String foodPairings;
     private String statusDisplay;
     private String servingTemperature;
     private String servingTemperatureDisplay;
@@ -39,13 +37,16 @@ public class Beer implements Parcelable {
     private String createDate;
     private String updateDate;
     @Ignore
-    Glass GlassObject;
+    private Labels labels;
     @Ignore
-    Srm SrmObject;
+    private Glass glass;
     @Ignore
-    Style StyleObject;
+    private Style style;
     @Ignore
-    List<Breweries> breweries;
+    private List<Breweries> breweries;
+
+    @Ignore
+    private Ingredients ingredients;
 
     public Beer(@NonNull String id, String name, String nameDisplay, String description, String abv, String ibu, float glasswareId, float srmId, float availableId, float styleId, String isOrganic, String isRetired, String status, String statusDisplay, String servingTemperature, String servingTemperatureDisplay, String originalGravity, String createDate, String updateDate) {
         this.id = id;
@@ -69,8 +70,6 @@ public class Beer implements Parcelable {
         this.updateDate = updateDate;
     }
 
-
-    // Getter Methods
     @Ignore
     protected Beer(Parcel in) {
         id = in.readString();
@@ -92,6 +91,13 @@ public class Beer implements Parcelable {
         originalGravity = in.readString();
         createDate = in.readString();
         updateDate = in.readString();
+        foodPairings = in.readString();
+        labels = in.readParcelable(Labels.class.getClassLoader());
+        glass = in.readParcelable(Glass.class.getClassLoader());
+        style = in.readParcelable(Style.class.getClassLoader());
+        breweries = in.createTypedArrayList(Breweries.CREATOR);
+
+        //ingredients = in.readParcelable(Ingredients.class.getClassLoader());
     }
 
     public static final Creator<Beer> CREATOR = new Creator<Beer>() {
@@ -155,7 +161,7 @@ public class Beer implements Parcelable {
     }
 
     public Labels getLabels() {
-        return LabelsObject;
+        return labels;
     }
 
     public String getStatus() {
@@ -187,15 +193,11 @@ public class Beer implements Parcelable {
     }
 
     public Glass getGlass() {
-        return GlassObject;
-    }
-
-    public Srm getSrm() {
-        return SrmObject;
+        return glass;
     }
 
     public Style getStyle() {
-        return StyleObject;
+        return style;
     }
 
     // Setter Methods
@@ -248,9 +250,9 @@ public class Beer implements Parcelable {
         this.isRetired = isRetired;
     }
 
-//    public void setLabels(Labels labelsObject) {
-//        this.LabelsObject = labelsObject;
-//    }
+    public void setLabels(Labels labels) {
+        this.labels = labels;
+    }
 
     public void setStatus(String status) {
         this.status = status;
@@ -280,6 +282,61 @@ public class Beer implements Parcelable {
         this.updateDate = updateDate;
     }
 
+
+    public List<Breweries> getBreweries() {
+        return breweries;
+    }
+
+    public void setBreweries(List<Breweries> breweries) {
+        this.breweries = breweries;
+    }
+
+    public void setGlass(Glass glass) {
+        this.glass = glass;
+    }
+
+    public void setStyle(Style style) {
+        this.style = style;
+    }
+
+    public Ingredients getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Ingredients ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public String getFoodPairings() {
+        return foodPairings;
+    }
+
+    public void setFoodPairings(String foodPairings) {
+        this.foodPairings = foodPairings;
+    }
+
+    public static DiffUtil.ItemCallback<Beer> DIFF_CALLBACK = new DiffUtil.ItemCallback<Beer>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Beer oldItem, @NonNull Beer newItem) {
+            return oldItem.id == newItem.id;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Beer oldItem, @NonNull Beer newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
+
+        Beer beer = (Beer) obj;
+        return beer.id.equals(this.id);
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -306,79 +363,12 @@ public class Beer implements Parcelable {
         dest.writeString(originalGravity);
         dest.writeString(createDate);
         dest.writeString(updateDate);
-    }
+        dest.writeString(foodPairings);
+        dest.writeParcelable(labels, flags);
+        dest.writeParcelable(glass, flags);
+        dest.writeParcelable(style, flags);
+        //   dest.writeParcelable(ingredients, flags);
+        dest.writeTypedList(breweries);
 
-    public void setGlass(Glass glassObject) {
-        this.GlassObject = glassObject;
-    }
-
-    public void setSrm(Srm srmObject) {
-        this.SrmObject = srmObject;
-    }
-
-    public void setStyle(Style styleObject) {
-        this.StyleObject = styleObject;
-    }
-
-    public Labels getLabelsObject() {
-        return LabelsObject;
-    }
-
-    public void setLabelsObject(Labels labelsObject) {
-        LabelsObject = labelsObject;
-    }
-
-    public Glass getGlassObject() {
-        return GlassObject;
-    }
-
-    public void setGlassObject(Glass glassObject) {
-        GlassObject = glassObject;
-    }
-
-    public Srm getSrmObject() {
-        return SrmObject;
-    }
-
-    public void setSrmObject(Srm srmObject) {
-        SrmObject = srmObject;
-    }
-
-    public Style getStyleObject() {
-        return StyleObject;
-    }
-
-    public void setStyleObject(Style styleObject) {
-        StyleObject = styleObject;
-    }
-
-    public List<Breweries> getBreweries() {
-        return breweries;
-    }
-
-    public void setBreweries(List<Breweries> breweries) {
-        this.breweries = breweries;
-    }
-
-    public static DiffUtil.ItemCallback<Beer> DIFF_CALLBACK = new DiffUtil.ItemCallback<Beer>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull Beer oldItem, @NonNull Beer newItem) {
-            return oldItem.id == newItem.id;
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull Beer oldItem, @NonNull Beer newItem) {
-            return oldItem.equals(newItem);
-        }
-    };
-
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this)
-            return true;
-
-        Beer beer = (Beer) obj;
-        return beer.id.equals(this.id);
     }
 }

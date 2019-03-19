@@ -2,10 +2,12 @@ package com.example.beerlovers.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 @Entity(tableName = "Style")
-public class Style {
+public class Style implements Parcelable {
     @PrimaryKey
     @NonNull
     private float id;
@@ -28,6 +30,37 @@ public class Style {
 
 
     // Getter Methods
+
+    protected Style(Parcel in) {
+        id = in.readFloat();
+        categoryId = in.readFloat();
+        name = in.readString();
+        shortName = in.readString();
+        description = in.readString();
+        ibuMin = in.readString();
+        ibuMax = in.readString();
+        abvMin = in.readString();
+        abvMax = in.readString();
+        srmMin = in.readString();
+        srmMax = in.readString();
+        ogMin = in.readString();
+        fgMin = in.readString();
+        fgMax = in.readString();
+        createDate = in.readString();
+        updateDate = in.readString();
+    }
+
+    public static final Creator<Style> CREATOR = new Creator<Style>() {
+        @Override
+        public Style createFromParcel(Parcel in) {
+            return new Style(in);
+        }
+
+        @Override
+        public Style[] newArray(int size) {
+            return new Style[size];
+        }
+    };
 
     public float getId() {
         return id;
@@ -165,5 +198,30 @@ public class Style {
 
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloat(id);
+        dest.writeFloat(categoryId);
+        dest.writeString(name);
+        dest.writeString(shortName);
+        dest.writeString(description);
+        dest.writeString(ibuMin);
+        dest.writeString(ibuMax);
+        dest.writeString(abvMin);
+        dest.writeString(abvMax);
+        dest.writeString(srmMin);
+        dest.writeString(srmMax);
+        dest.writeString(ogMin);
+        dest.writeString(fgMin);
+        dest.writeString(fgMax);
+        dest.writeString(createDate);
+        dest.writeString(updateDate);
     }
 }

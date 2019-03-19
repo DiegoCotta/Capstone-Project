@@ -2,10 +2,12 @@ package com.example.beerlovers.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 @Entity(tableName = "Location")
-public class Location {
+public class Location implements Parcelable {
     @PrimaryKey
     @NonNull
     private String id;
@@ -36,6 +38,45 @@ public class Location {
 
 
     // Getter Methods
+
+    protected Location(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        streetAddress = in.readString();
+        locality = in.readString();
+        region = in.readString();
+        postalCode = in.readString();
+        phone = in.readString();
+        website = in.readString();
+        hoursOfOperation = in.readString();
+        latitude = in.readFloat();
+        longitude = in.readFloat();
+        isPrimary = in.readString();
+        inPlanning = in.readString();
+        isClosed = in.readString();
+        openToPublic = in.readString();
+        locationType = in.readString();
+        locationTypeDisplay = in.readString();
+        countryIsoCode = in.readString();
+        yearOpened = in.readString();
+        status = in.readString();
+        statusDisplay = in.readString();
+        createDate = in.readString();
+        updateDate = in.readString();
+        hoursOfOperationNotes = in.readString();
+    }
+
+    public static final Creator<Location> CREATOR = new Creator<Location>() {
+        @Override
+        public Location createFromParcel(Parcel in) {
+            return new Location(in);
+        }
+
+        @Override
+        public Location[] newArray(int size) {
+            return new Location[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -237,5 +278,38 @@ public class Location {
 
     public void setCountry(Country countryObject) {
         this.CountryObject = countryObject;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(streetAddress);
+        dest.writeString(locality);
+        dest.writeString(region);
+        dest.writeString(postalCode);
+        dest.writeString(phone);
+        dest.writeString(website);
+        dest.writeString(hoursOfOperation);
+        dest.writeFloat(latitude);
+        dest.writeFloat(longitude);
+        dest.writeString(isPrimary);
+        dest.writeString(inPlanning);
+        dest.writeString(isClosed);
+        dest.writeString(openToPublic);
+        dest.writeString(locationType);
+        dest.writeString(locationTypeDisplay);
+        dest.writeString(countryIsoCode);
+        dest.writeString(yearOpened);
+        dest.writeString(status);
+        dest.writeString(statusDisplay);
+        dest.writeString(createDate);
+        dest.writeString(updateDate);
+        dest.writeString(hoursOfOperationNotes);
     }
 }

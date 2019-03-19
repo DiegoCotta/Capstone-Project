@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toTopOf="@+id/tv_label_ibu"
+        app:layout_constraintTop_toTopOf="@+id/tv_label_ibu"
+        tools:context=".view.activities.BeerActivity"
+        tools:showIn="@layout/activity_beer">
+
+        <TextView
+            android:id="@+id/tv_label_ibu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/ibu"
+            android:textColor="@color/colorAccentText"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_ibu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/colorAccentText"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/tv_label_ibu"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="18" />
+
+        <TextView
+            android:id="@+id/tv_label_abv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/abv"
+            android:textColor="@color/colorAccentText"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/tv_ibu"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_abv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/colorAccentText"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/tv_label_abv"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="18.5% - 35.4%" />
+
+        <TextView
+            android:id="@+id/tv_retired"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/retired_beer"
+            android:textColor="@color/colorAlert"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_organic"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_abv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_organic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/organic_beer"
+            android:textColor="@color/colorOrganicBeer"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_retired"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_label_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/style"
+            android:textColor="@color/colorAccentText"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ibu" />
+
+        <TextView
+            android:id="@+id/tv_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="sans-srif"
+            android:textColor="@color/colorAccentText"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/tv_label_style"
+            app:layout_constraintTop_toTopOf="@+id/tv_label_style"
+            tools:text="Pale Ale" />
+
+        <TextView
+            android:id="@+id/tv_glass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="sans-srif"
+            android:textColor="@color/colorAccentText"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_label_style"
+            tools:text="Pilsen" />
+
+        <TextView
+            android:id="@+id/tv_label_glass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/glass"
+            android:textColor="@color/colorAccentText"
+            app:layout_constraintEnd_toStartOf="@+id/tv_glass"
+            app:layout_constraintTop_toTopOf="@+id/tv_style" />
+
+        <TextView
+            android:id="@+id/tv_label_ingredients"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/ingredients"
+            android:textColor="@color/colorAccentText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_label_style" />
+
+        <TextView
+            android:id="@+id/tv_ingredients"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="sans-srif"
+            android:textColor="@color/colorAccentText"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_label_ingredients"
+            app:layout_constraintTop_toTopOf="@+id/tv_label_ingredients"
+            tools:text="hops: \nmalt:" />
+
+        <TextView
+            android:id="@+id/tv_label_food_pairings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/food"
+            android:textColor="@color/colorAccentText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ingredients" />
+
+        <TextView
+            android:id="@+id/tv_food_pairings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="sans-srif"
+            android:textColor="@color/colorAccentText"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_label_food_pairings"
+            app:layout_constraintTop_toTopOf="@+id/tv_label_food_pairings"
+            tools:text="Pizza\npizza" />
+
+        <TextView
+            android:id="@+id/tv_label_breweries"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/breweries"
+            android:textColor="@color/colorAccentText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_food_pairings" />
+
+        <TextView
+            android:id="@+id/tv_breweries"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="sans-srif"
+            android:textColor="@color/colorAccentText"
+            android:textSize="14sp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_label_breweries"
+            app:layout_constraintTop_toTopOf="@+id/tv_label_breweries"
+            tools:text="Pilsen" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="sans-srif"
+            android:textColor="@color/colorAccentText"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_breweries"
+            tools:text="description" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

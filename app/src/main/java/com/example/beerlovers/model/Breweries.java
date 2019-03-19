@@ -2,11 +2,16 @@ package com.example.beerlovers.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
+
 @Entity(tableName = "Breweries")
-public class Breweries {
+public class Breweries implements Parcelable {
     @PrimaryKey
     @NonNull
     private String id;
@@ -16,7 +21,8 @@ public class Breweries {
     private String website;
     private String established;
     private String isOrganic;
-    Images ImagesObject;
+    @SerializedName("labels")
+    Labels Images;
     private String status;
     private String statusDisplay;
     private String createDate;
@@ -28,6 +34,37 @@ public class Breweries {
 
 
     // Getter Methods
+
+    protected Breweries(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        nameShortDisplay = in.readString();
+        description = in.readString();
+        website = in.readString();
+        established = in.readString();
+        isOrganic = in.readString();
+        Images = in.readParcelable(Labels.class.getClassLoader());
+        status = in.readString();
+        statusDisplay = in.readString();
+        createDate = in.readString();
+        updateDate = in.readString();
+        isMassOwned = in.readString();
+        isInBusiness = in.readString();
+        isVerified = in.readString();
+        locations = in.createTypedArrayList(Location.CREATOR);
+    }
+
+    public static final Creator<Breweries> CREATOR = new Creator<Breweries>() {
+        @Override
+        public Breweries createFromParcel(Parcel in) {
+            return new Breweries(in);
+        }
+
+        @Override
+        public Breweries[] newArray(int size) {
+            return new Breweries[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -57,9 +94,6 @@ public class Breweries {
         return isOrganic;
     }
 
-    public Images getImages() {
-        return ImagesObject;
-    }
 
     public String getStatus() {
         return status;
@@ -119,10 +153,6 @@ public class Breweries {
         this.isOrganic = isOrganic;
     }
 
-    public void setImages(Images imagesObject) {
-        this.ImagesObject = imagesObject;
-    }
-
     public void setStatus(String status) {
         this.status = status;
     }
@@ -151,12 +181,12 @@ public class Breweries {
         this.isVerified = isVerified;
     }
 
-    public Images getImagesObject() {
-        return ImagesObject;
+    public Labels getImages() {
+        return Images;
     }
 
-    public void setImagesObject(Images imagesObject) {
-        ImagesObject = imagesObject;
+    public void setImages(Labels images) {
+        Images = images;
     }
 
     public List<Location> getLocations() {
@@ -165,5 +195,30 @@ public class Breweries {
 
     public void setLocations(List<Location> locations) {
         this.locations = locations;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(nameShortDisplay);
+        dest.writeString(description);
+        dest.writeString(website);
+        dest.writeString(established);
+        dest.writeString(isOrganic);
+        dest.writeParcelable(Images, flags);
+        dest.writeString(status);
+        dest.writeString(statusDisplay);
+        dest.writeString(createDate);
+        dest.writeString(updateDate);
+        dest.writeString(isMassOwned);
+        dest.writeString(isInBusiness);
+        dest.writeString(isVerified);
+        dest.writeTypedList(locations);
     }
 }

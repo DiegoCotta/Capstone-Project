@@ -23,8 +23,7 @@ android {
     dataBinding {
         enabled = true
     }
-
-
+    buildToolsVersion '28.0.3'
 }
 
 dependencies {
@@ -54,7 +53,4 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'br.com.zup:multi-state-layout:1.0.3'
-
-
-
 }

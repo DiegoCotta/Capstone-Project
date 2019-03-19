@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 
 import com.example.beerlovers.R;
 import com.example.beerlovers.model.Beer;
+import com.example.beerlovers.model.FragmentType;
 import com.example.beerlovers.model.NetworkState;
 import com.example.beerlovers.service.BeersDataSource;
 
@@ -26,29 +27,8 @@ public class ListBeerViewModel extends AndroidViewModel {
     BeersDataFactory feedDataFactory;
     PagedList.Config pagedListConfig;
     public ListBeerViewModel(@NonNull Application application) {
-
         super(application);
-        executor = Executors.newFixedThreadPool(5);
-        feedDataFactory = new BeersDataFactory();
-        networkState = Transformations.switchMap(feedDataFactory.getMutableLiveData(),
-                new Function<BeersDataSource, LiveData<NetworkState>>() {
-                    @Override
-                    public LiveData<NetworkState> apply(BeersDataSource dataSource) {
-                        return dataSource.getNetworkState();
-                    }
-                });
 
-         pagedListConfig =
-                (new PagedList.Config.Builder())
-                        .setEnablePlaceholders(false)
-                        .setPrefetchDistance(20)
-                        .setPageSize(50)
-                        .build();
-
-
-        beersLiveData = (new LivePagedListBuilder(feedDataFactory, pagedListConfig))
-                .setFetchExecutor(executor)
-                .build();
     }
 
     public LiveData<NetworkState> getNetworkState() {
@@ -59,12 +39,35 @@ public class ListBeerViewModel extends AndroidViewModel {
      * Getter method for the pageList
      */
     public LiveData<PagedList<Beer>> getBeersLiveData() {
-
         return beersLiveData;
 
     }
 
     public void searchBeer(String textSearch) {
         feedDataFactory.setSearch(textSearch);
+    }
+
+    public void init(FragmentType type) {
+        executor = Executors.newFixedThreadPool(5);
+        feedDataFactory = new BeersDataFactory();
+        networkState = Transformations.switchMap(feedDataFactory.getMutableLiveData(),
+                new Function<BeersDataSource, LiveData<NetworkState>>() {
+                    @Override
+                    public LiveData<NetworkState> apply(BeersDataSource dataSource) {
+                        return dataSource.getNetworkState();
+                    }
+                });
+
+        pagedListConfig =
+                (new PagedList.Config.Builder())
+                        .setEnablePlaceholders(false)
+                        .setPrefetchDistance(20)
+                        .setPageSize(50)
+                        .build();
+
+
+        beersLiveData = (new LivePagedListBuilder(feedDataFactory, pagedListConfig))
+                .setFetchExecutor(executor)
+                .build();
     }
 }

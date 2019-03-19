@@ -2,9 +2,11 @@ package com.example.beerlovers.model;
 
 
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-public class Glass {
+public class Glass implements Parcelable {
     @PrimaryKey
     @NonNull
     private float id;
@@ -13,6 +15,24 @@ public class Glass {
 
 
     // Getter Methods
+
+    protected Glass(Parcel in) {
+        id = in.readFloat();
+        name = in.readString();
+        createDate = in.readString();
+    }
+
+    public static final Creator<Glass> CREATOR = new Creator<Glass>() {
+        @Override
+        public Glass createFromParcel(Parcel in) {
+            return new Glass(in);
+        }
+
+        @Override
+        public Glass[] newArray(int size) {
+            return new Glass[size];
+        }
+    };
 
     public float getId() {
         return id;
@@ -38,5 +58,17 @@ public class Glass {
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloat(id);
+        dest.writeString(name);
+        dest.writeString(createDate);
     }
 }

@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:context=".view.ListBeerFragment"
+            tools:context=".view.fragments.ListBeerFragment"
             tools:listitem="@layout/item_list_beer" />
     </br.com.zup.multistatelayout.MultiStateLayout>
 </layout>

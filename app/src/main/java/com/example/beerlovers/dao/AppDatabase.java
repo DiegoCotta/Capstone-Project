@@ -7,17 +7,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.beerlovers.model.Beer;
-import com.example.beerlovers.model.Breweries;
-import com.example.beerlovers.model.Category;
-import com.example.beerlovers.model.Country;
-import com.example.beerlovers.model.Glass;
-import com.example.beerlovers.model.Images;
-import com.example.beerlovers.model.Ingredient;
-import com.example.beerlovers.model.Ingredients;
-import com.example.beerlovers.model.Labels;
-import com.example.beerlovers.model.Location;
-import com.example.beerlovers.model.Srm;
-import com.example.beerlovers.model.Style;
 
 
 /**

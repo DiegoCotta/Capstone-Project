@@ -18,11 +18,11 @@ import com.squareup.picasso.Picasso;
 
 public class BeersAdapter extends PagedListAdapter<Beer, RecyclerView.ViewHolder> {
 
+    private BeersAdapterListener listener;
 
-    private NetworkState networkState;
-
-    public BeersAdapter() {
+    public BeersAdapter(BeersAdapterListener listener) {
         super(Beer.DIFF_CALLBACK);
+        this.listener = listener;
     }
 
     @Override
@@ -50,19 +50,29 @@ public class BeersAdapter extends PagedListAdapter<Beer, RecyclerView.ViewHolder
             this.binding = binding;
         }
 
-        public void bind(Beer beer) {
-
+        public void bind(final Beer beer) {
             binding.tvDescription.setText(beer.getDescription());
             binding.tvTitle.setText(beer.getName());
             if (beer.getLabels() != null)
-                Picasso.get().load(beer.getLabels().getMedium()).fit().
+                Picasso.get().load(beer.getLabels().getIcon()).fit().
                         transform(new CircleTransform()).into(binding.ivBeer);
             else {
                 Picasso.get().load(R.mipmap.ic_launcher).fit().
                         transform(new CircleTransform()).into(binding.ivBeer);
             }
+
+            binding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(beer);
+                }
+            });
         }
 
     }
 
+
+    public interface BeersAdapterListener {
+        void onItemClick(Beer beer);
+    }
 }

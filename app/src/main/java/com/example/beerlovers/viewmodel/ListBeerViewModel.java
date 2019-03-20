@@ -28,7 +28,6 @@ public class ListBeerViewModel extends AndroidViewModel {
     PagedList.Config pagedListConfig;
     public ListBeerViewModel(@NonNull Application application) {
         super(application);
-
     }
 
     public LiveData<NetworkState> getNetworkState() {

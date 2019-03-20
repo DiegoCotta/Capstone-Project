@@ -9,7 +9,6 @@ import android.util.Log;
 import com.example.beerlovers.model.Beer;
 import com.example.beerlovers.model.DBBeer;
 
-
 /**
  * Created by diegocotta on 09/10/2018.
  */
@@ -36,6 +35,7 @@ public abstract class AppDatabase extends RoomDatabase {
         return sInstance;
     }
 
+    public abstract BeerDao beerDao();
 }
 
 

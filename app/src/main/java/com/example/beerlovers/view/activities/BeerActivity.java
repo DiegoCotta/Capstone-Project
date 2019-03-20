@@ -1,9 +1,14 @@
 package com.example.beerlovers.view.activities;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,8 +21,10 @@ import com.example.beerlovers.R;
 import com.example.beerlovers.databinding.ActivityBeerBinding;
 import com.example.beerlovers.model.Beer;
 import com.example.beerlovers.model.Breweries;
+import com.example.beerlovers.model.DBBeer;
 import com.example.beerlovers.model.Ingredient;
 import com.example.beerlovers.utils.CircleTransform;
+import com.example.beerlovers.viewmodel.BeerDetailsViewModel;
 import com.squareup.picasso.Picasso;
 
 public class BeerActivity extends AppCompatActivity {
@@ -25,26 +32,24 @@ public class BeerActivity extends AppCompatActivity {
     public static final String BEER_KEY = "beer-key";
     private Beer mBeer;
     private ActivityBeerBinding mBinding;
+    private BeerDetailsViewModel mViewModel;
+    private Menu menu;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_beer);
-
+        if (getIntent() != null && getIntent().hasExtra(BEER_KEY))
+            mBeer = getIntent().getParcelableExtra(BEER_KEY);
         setSupportActionBar(mBinding.toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                mViewModel.changeTasted();
             }
         });
 
-        if (getIntent() != null && getIntent().hasExtra(BEER_KEY))
-            mBeer = getIntent().getParcelableExtra(BEER_KEY);
 
         Picasso.get().load(R.mipmap.ic_launcher).fit().into(mBinding.photo);
     }
@@ -120,7 +125,6 @@ public class BeerActivity extends AppCompatActivity {
             mBinding.content.tvLabelBreweries.setVisibility(View.GONE);
         }
 
-
         if (mBeer.getDescription() != null) {
             mBinding.content.tvDescription.setText(mBeer.getDescription());
         }
@@ -129,8 +133,11 @@ public class BeerActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater inflater = getMenuInflater();
+        this.menu = menu;
         inflater.inflate(R.menu.details_menu, menu);
+        setupViewModel();
         return true;
     }
 
@@ -141,20 +148,39 @@ public class BeerActivity extends AppCompatActivity {
                 onBackPressed();
                 break;
             case R.id.favorite:
-                item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-
-                        return false;
-                    }
-                });
-
+                mViewModel.changeFavorite();
                 break;
             default:
                 break;
         }
 
         return true;
+    }
+
+    private void setupViewModel() {
+        mViewModel = ViewModelProviders.of(this).get(BeerDetailsViewModel.class);
+        mViewModel.getBeer(mBeer.getId());
+        mViewModel.setBeer(mBeer);
+        mViewModel.getDbBeer().observe(this, new Observer<DBBeer>() {
+            @Override
+            public void onChanged(@Nullable DBBeer beer) {
+                if (beer != null) {
+                    if (beer.isTasted()) {
+                        mBinding.fab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(BeerActivity.this, R.color.colorTastedBackground)));
+                        mBinding.fab.setImageResource(R.drawable.ic_checked);
+                    } else {
+                        mBinding.fab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(BeerActivity.this, R.color.colorAccent)));
+                        mBinding.fab.setImageResource(R.drawable.ic_add);
+                    }
+                    if (beer.isFavorite()) {
+                        menu.getItem(0).setIcon(ContextCompat.getDrawable(BeerActivity.this, R.drawable.ic_favorite_full));
+                    } else {
+                        menu.getItem(0).setIcon(ContextCompat.getDrawable(BeerActivity.this, R.drawable.ic_favorite_empty));
+                    }
+                }
+
+            }
+        });
     }
 
 }

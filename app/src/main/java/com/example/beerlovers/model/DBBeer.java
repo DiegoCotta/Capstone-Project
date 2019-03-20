@@ -3,18 +3,17 @@ package com.example.beerlovers.model;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-import java.util.List;
-
 @Entity(tableName = "Beer")
 public class DBBeer {
     @PrimaryKey(autoGenerate = true)
     private int id;
+    private String stringId;
     private String name;
     private String description;
     private String abv;
     private String ibu;
-    private boolean isOrganic;
-    private boolean isRetired;
+    private boolean organic;
+    private boolean retired;
     private String foodPairings;
     private String icon;
     private String image;
@@ -23,15 +22,19 @@ public class DBBeer {
     private String breweries;
     private String ingredients;
     private boolean favorite;
-    private boolean teasted;
+    private boolean tasted;
 
-    public DBBeer(String name, String description, String abv, String ibu, boolean isOrganic, boolean isRetired, String foodPairings, String icon, String image, String glass, String style, String breweries, String ingredients, boolean favorite, boolean teasted) {
+    public DBBeer() {
+    }
+
+    DBBeer(String stringId,String name, String description, String abv, String ibu, boolean isOrganic, boolean isRetired, String foodPairings, String icon, String image, String glass, String style, String breweries, String ingredients, boolean favorite, boolean tasted) {
         this.name = name;
+        this.stringId = stringId;
         this.description = description;
         this.abv = abv;
         this.ibu = ibu;
-        this.isOrganic = isOrganic;
-        this.isRetired = isRetired;
+        this.organic = isOrganic;
+        this.retired = isRetired;
         this.foodPairings = foodPairings;
         this.icon = icon;
         this.image = image;
@@ -40,7 +43,7 @@ public class DBBeer {
         this.breweries = breweries;
         this.ingredients = ingredients;
         this.favorite = favorite;
-        this.teasted = teasted;
+        this.tasted = tasted;
     }
 
     public int getId() {
@@ -81,22 +84,6 @@ public class DBBeer {
 
     public void setIbu(String ibu) {
         this.ibu = ibu;
-    }
-
-    public boolean getIsOrganic() {
-        return isOrganic;
-    }
-
-    public void setIsOrganic(boolean isOrganic) {
-        this.isOrganic = isOrganic;
-    }
-
-    public boolean getIsRetired() {
-        return isRetired;
-    }
-
-    public void setIsRetired(boolean isRetired) {
-        this.isRetired = isRetired;
     }
 
     public String getFoodPairings() {
@@ -155,22 +142,6 @@ public class DBBeer {
         this.ingredients = ingredients;
     }
 
-    public boolean isOrganic() {
-        return isOrganic;
-    }
-
-    public void setOrganic(boolean organic) {
-        isOrganic = organic;
-    }
-
-    public boolean isRetired() {
-        return isRetired;
-    }
-
-    public void setRetired(boolean retired) {
-        isRetired = retired;
-    }
-
     public boolean isFavorite() {
         return favorite;
     }
@@ -179,11 +150,35 @@ public class DBBeer {
         this.favorite = favorite;
     }
 
-    public boolean isTeasted() {
-        return teasted;
+    public boolean isTasted() {
+        return tasted;
     }
 
-    public void setTeasted(boolean teasted) {
-        this.teasted = teasted;
+    public void setTasted(boolean tasted) {
+        this.tasted = tasted;
+    }
+
+    public boolean isOrganic() {
+        return organic;
+    }
+
+    public void setOrganic(boolean organic) {
+        this.organic = organic;
+    }
+
+    public boolean isRetired() {
+        return retired;
+    }
+
+    public void setRetired(boolean retired) {
+        this.retired = retired;
+    }
+
+    public String getStringId() {
+        return stringId;
+    }
+
+    public void setStringId(String stringId) {
+        this.stringId = stringId;
     }
 }

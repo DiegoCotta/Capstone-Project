@@ -253,6 +253,7 @@ public class Beer implements Parcelable {
 
         }
         return new DBBeer(
+                getId(),
                 this.nameDisplay,
                 this.description,
                 abv,
@@ -264,8 +265,8 @@ public class Beer implements Parcelable {
                 image,
                 glass != null ? glass.getName() : null,
                 style != null ? style.getName() : null,
-                getBreweriesString(),
-                getIngredients().toString(),
+                getBreweries() != null ? getBreweriesString() : null,
+                getIngredients() != null ? getIngredients().toString() : null,
                 false,
                 false);
     }

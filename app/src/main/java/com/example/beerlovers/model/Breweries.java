@@ -10,10 +10,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-@Entity(tableName = "Breweries")
+
 public class Breweries implements Parcelable {
-    @PrimaryKey
-    @NonNull
     private String id;
     private String name;
     private String nameShortDisplay;
@@ -23,14 +21,6 @@ public class Breweries implements Parcelable {
     private String isOrganic;
     @SerializedName("labels")
     Labels Images;
-    private String status;
-    private String statusDisplay;
-    private String createDate;
-    private String updateDate;
-    private String isMassOwned;
-    private String isInBusiness;
-    private String isVerified;
-    List<Location> locations;
 
 
     // Getter Methods
@@ -44,14 +34,7 @@ public class Breweries implements Parcelable {
         established = in.readString();
         isOrganic = in.readString();
         Images = in.readParcelable(Labels.class.getClassLoader());
-        status = in.readString();
-        statusDisplay = in.readString();
-        createDate = in.readString();
-        updateDate = in.readString();
-        isMassOwned = in.readString();
-        isInBusiness = in.readString();
-        isVerified = in.readString();
-        locations = in.createTypedArrayList(Location.CREATOR);
+
     }
 
     public static final Creator<Breweries> CREATOR = new Creator<Breweries>() {
@@ -86,42 +69,6 @@ public class Breweries implements Parcelable {
         return website;
     }
 
-    public String getEstablished() {
-        return established;
-    }
-
-    public String getIsOrganic() {
-        return isOrganic;
-    }
-
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getStatusDisplay() {
-        return statusDisplay;
-    }
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public String getUpdateDate() {
-        return updateDate;
-    }
-
-    public String getIsMassOwned() {
-        return isMassOwned;
-    }
-
-    public String getIsInBusiness() {
-        return isInBusiness;
-    }
-
-    public String getIsVerified() {
-        return isVerified;
-    }
 
     // Setter Methods
 
@@ -153,33 +100,6 @@ public class Breweries implements Parcelable {
         this.isOrganic = isOrganic;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setStatusDisplay(String statusDisplay) {
-        this.statusDisplay = statusDisplay;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
-    public void setUpdateDate(String updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public void setIsMassOwned(String isMassOwned) {
-        this.isMassOwned = isMassOwned;
-    }
-
-    public void setIsInBusiness(String isInBusiness) {
-        this.isInBusiness = isInBusiness;
-    }
-
-    public void setIsVerified(String isVerified) {
-        this.isVerified = isVerified;
-    }
 
     public Labels getImages() {
         return Images;
@@ -187,14 +107,6 @@ public class Breweries implements Parcelable {
 
     public void setImages(Labels images) {
         Images = images;
-    }
-
-    public List<Location> getLocations() {
-        return locations;
-    }
-
-    public void setLocations(List<Location> locations) {
-        this.locations = locations;
     }
 
     @Override
@@ -212,13 +124,5 @@ public class Breweries implements Parcelable {
         dest.writeString(established);
         dest.writeString(isOrganic);
         dest.writeParcelable(Images, flags);
-        dest.writeString(status);
-        dest.writeString(statusDisplay);
-        dest.writeString(createDate);
-        dest.writeString(updateDate);
-        dest.writeString(isMassOwned);
-        dest.writeString(isInBusiness);
-        dest.writeString(isVerified);
-        dest.writeTypedList(locations);
     }
 }

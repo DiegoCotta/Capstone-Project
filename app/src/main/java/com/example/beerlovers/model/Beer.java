@@ -1,76 +1,30 @@
 package com.example.beerlovers.model;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 
-import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-@Entity(tableName = "Beer")
+
 public class Beer implements Parcelable {
-    @PrimaryKey
-    @NonNull
     private String id;
     private String name;
     private String nameDisplay;
     private String description;
     private String abv;
     private String ibu;
-    private float glasswareId;
-    private float srmId;
-    private float availableId;
-    private float styleId;
     private String isOrganic;
     private String isRetired;
-    private String status;
     private String foodPairings;
-    private String statusDisplay;
-    private String servingTemperature;
-    private String servingTemperatureDisplay;
-    private String originalGravity;
-    private String createDate;
-    private String updateDate;
-    @Ignore
     private Labels labels;
-    @Ignore
     private Glass glass;
-    @Ignore
     private Style style;
-    @Ignore
     private List<Breweries> breweries;
-
-    @Ignore
     private Ingredients ingredients;
 
-    public Beer(@NonNull String id, String name, String nameDisplay, String description, String abv, String ibu, float glasswareId, float srmId, float availableId, float styleId, String isOrganic, String isRetired, String status, String statusDisplay, String servingTemperature, String servingTemperatureDisplay, String originalGravity, String createDate, String updateDate) {
-        this.id = id;
-        this.name = name;
-        this.nameDisplay = nameDisplay;
-        this.description = description;
-        this.abv = abv;
-        this.ibu = ibu;
-        this.glasswareId = glasswareId;
-        this.srmId = srmId;
-        this.availableId = availableId;
-        this.styleId = styleId;
-        this.isOrganic = isOrganic;
-        this.isRetired = isRetired;
-        this.status = status;
-        this.statusDisplay = statusDisplay;
-        this.servingTemperature = servingTemperature;
-        this.servingTemperatureDisplay = servingTemperatureDisplay;
-        this.originalGravity = originalGravity;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-    }
-
-    @Ignore
     protected Beer(Parcel in) {
         id = in.readString();
         name = in.readString();
@@ -78,26 +32,14 @@ public class Beer implements Parcelable {
         description = in.readString();
         abv = in.readString();
         ibu = in.readString();
-        glasswareId = in.readFloat();
-        srmId = in.readFloat();
-        availableId = in.readFloat();
-        styleId = in.readFloat();
         isOrganic = in.readString();
         isRetired = in.readString();
-        status = in.readString();
-        statusDisplay = in.readString();
-        servingTemperature = in.readString();
-        servingTemperatureDisplay = in.readString();
-        originalGravity = in.readString();
-        createDate = in.readString();
-        updateDate = in.readString();
         foodPairings = in.readString();
         labels = in.readParcelable(Labels.class.getClassLoader());
         glass = in.readParcelable(Glass.class.getClassLoader());
         style = in.readParcelable(Style.class.getClassLoader());
         breweries = in.createTypedArrayList(Breweries.CREATOR);
-
-        //ingredients = in.readParcelable(Ingredients.class.getClassLoader());
+        ingredients = in.readParcelable(Ingredients.class.getClassLoader());
     }
 
     public static final Creator<Beer> CREATOR = new Creator<Beer>() {
@@ -136,22 +78,6 @@ public class Beer implements Parcelable {
         return ibu;
     }
 
-    public float getGlasswareId() {
-        return glasswareId;
-    }
-
-    public float getSrmId() {
-        return srmId;
-    }
-
-    public float getAvailableId() {
-        return availableId;
-    }
-
-    public float getStyleId() {
-        return styleId;
-    }
-
     public String getIsOrganic() {
         return isOrganic;
     }
@@ -162,34 +88,6 @@ public class Beer implements Parcelable {
 
     public Labels getLabels() {
         return labels;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getStatusDisplay() {
-        return statusDisplay;
-    }
-
-    public String getServingTemperature() {
-        return servingTemperature;
-    }
-
-    public String getServingTemperatureDisplay() {
-        return servingTemperatureDisplay;
-    }
-
-    public String getOriginalGravity() {
-        return originalGravity;
-    }
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public String getUpdateDate() {
-        return updateDate;
     }
 
     public Glass getGlass() {
@@ -226,21 +124,6 @@ public class Beer implements Parcelable {
         this.ibu = ibu;
     }
 
-    public void setGlasswareId(float glasswareId) {
-        this.glasswareId = glasswareId;
-    }
-
-    public void setSrmId(float srmId) {
-        this.srmId = srmId;
-    }
-
-    public void setAvailableId(float availableId) {
-        this.availableId = availableId;
-    }
-
-    public void setStyleId(float styleId) {
-        this.styleId = styleId;
-    }
 
     public void setIsOrganic(String isOrganic) {
         this.isOrganic = isOrganic;
@@ -254,37 +137,18 @@ public class Beer implements Parcelable {
         this.labels = labels;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setStatusDisplay(String statusDisplay) {
-        this.statusDisplay = statusDisplay;
-    }
-
-    public void setServingTemperature(String servingTemperature) {
-        this.servingTemperature = servingTemperature;
-    }
-
-    public void setServingTemperatureDisplay(String servingTemperatureDisplay) {
-        this.servingTemperatureDisplay = servingTemperatureDisplay;
-    }
-
-    public void setOriginalGravity(String originalGravity) {
-        this.originalGravity = originalGravity;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
-    public void setUpdateDate(String updateDate) {
-        this.updateDate = updateDate;
-    }
-
 
     public List<Breweries> getBreweries() {
         return breweries;
+    }
+
+    public String getBreweriesString() {
+        StringBuilder breweries = new StringBuilder();
+        for (Breweries brs : getBreweries()) {
+            breweries.append(brs.getNameShortDisplay()).append(",");
+        }
+        breweries = new StringBuilder(breweries.toString().replaceFirst(".$", ""));
+        return breweries.toString();
     }
 
     public void setBreweries(List<Breweries> breweries) {
@@ -299,20 +163,20 @@ public class Beer implements Parcelable {
         this.style = style;
     }
 
-    public Ingredients getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(Ingredients ingredients) {
-        this.ingredients = ingredients;
-    }
-
     public String getFoodPairings() {
         return foodPairings;
     }
 
     public void setFoodPairings(String foodPairings) {
         this.foodPairings = foodPairings;
+    }
+
+    public Ingredients getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Ingredients ingredients) {
+        this.ingredients = ingredients;
     }
 
     public static DiffUtil.ItemCallback<Beer> DIFF_CALLBACK = new DiffUtil.ItemCallback<Beer>() {
@@ -337,6 +201,7 @@ public class Beer implements Parcelable {
         return beer.id.equals(this.id);
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -350,25 +215,58 @@ public class Beer implements Parcelable {
         dest.writeString(description);
         dest.writeString(abv);
         dest.writeString(ibu);
-        dest.writeFloat(glasswareId);
-        dest.writeFloat(srmId);
-        dest.writeFloat(availableId);
-        dest.writeFloat(styleId);
         dest.writeString(isOrganic);
         dest.writeString(isRetired);
-        dest.writeString(status);
-        dest.writeString(statusDisplay);
-        dest.writeString(servingTemperature);
-        dest.writeString(servingTemperatureDisplay);
-        dest.writeString(originalGravity);
-        dest.writeString(createDate);
-        dest.writeString(updateDate);
         dest.writeString(foodPairings);
         dest.writeParcelable(labels, flags);
         dest.writeParcelable(glass, flags);
         dest.writeParcelable(style, flags);
-        //   dest.writeParcelable(ingredients, flags);
         dest.writeTypedList(breweries);
+        dest.writeParcelable(ingredients, flags);
+    }
 
+
+    public DBBeer toDB() {
+        String ibu = "";
+        if (getIbu() != null) {
+            ibu = getIbu();
+        } else if (getStyle() != null && getStyle().getIbuMin() != null) {
+            ibu = getStyle().getIbuMin();
+        }
+
+        String abv = "";
+        if (getIbu() != null) {
+            abv = getAbv();
+        } else if (getStyle() != null && getStyle().getAbvMin() != null) {
+            abv = getStyle().getAbvMin();
+        }
+        String icon = "";
+        String image = "";
+
+        if (getLabels() != null) {
+            if (getLabels().getIcon() != null) {
+                icon = getLabels().getIcon();
+            }
+            if (getLabels().getMedium() != null) {
+                image = getLabels().getMedium();
+            }
+
+        }
+        return new DBBeer(
+                this.nameDisplay,
+                this.description,
+                abv,
+                ibu,
+                isOrganic.equalsIgnoreCase("Y"),
+                isRetired.equalsIgnoreCase("Y"),
+                foodPairings,
+                icon,
+                image,
+                glass != null ? glass.getName() : null,
+                style != null ? style.getName() : null,
+                getBreweriesString(),
+                getIngredients().toString(),
+                false,
+                false);
     }
 }

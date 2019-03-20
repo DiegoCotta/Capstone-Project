@@ -7,13 +7,14 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.beerlovers.model.Beer;
+import com.example.beerlovers.model.DBBeer;
 
 
 /**
  * Created by diegocotta on 09/10/2018.
  */
 
-@Database(entities = {Beer.class}, version = 1, exportSchema = false)
+@Database(entities = {DBBeer.class}, version = 1, exportSchema = false)
 
 public abstract class AppDatabase extends RoomDatabase {
 

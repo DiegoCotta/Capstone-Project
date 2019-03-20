@@ -16,6 +16,7 @@ import com.example.beerlovers.R;
 import com.example.beerlovers.databinding.ActivityBeerBinding;
 import com.example.beerlovers.model.Beer;
 import com.example.beerlovers.model.Breweries;
+import com.example.beerlovers.model.Ingredient;
 import com.example.beerlovers.utils.CircleTransform;
 import com.squareup.picasso.Picasso;
 
@@ -52,7 +53,7 @@ public class BeerActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (mBeer.getLabels() != null)
-            if (mBeer.getLabels().getLarge() != null) {
+            if (mBeer.getLabels().getIcon() != null) {
                 Picasso.get().load(mBeer.getLabels().getLarge()).into(mBinding.photo);
             } else if (mBeer.getLabels().getMedium() != null) {
                 Picasso.get().load(mBeer.getLabels().getMedium()).fit().into(mBinding.photo);
@@ -62,7 +63,7 @@ public class BeerActivity extends AppCompatActivity {
 
         if (mBeer.getIbu() != null)
             mBinding.content.tvIbu.setText(mBeer.getIbu());
-        else if (mBeer.getStyle() != null) {
+        else if (mBeer.getStyle() != null && mBeer.getStyle().getIbuMin() != null) {
             mBinding.content.tvIbu.setText(mBeer.getStyle().getIbuMin());
         } else {
             mBinding.content.tvIbu.setVisibility(View.GONE);
@@ -106,17 +107,20 @@ public class BeerActivity extends AppCompatActivity {
             mBinding.content.tvFoodPairings.setVisibility(View.GONE);
             mBinding.content.tvLabelFoodPairings.setVisibility(View.GONE);
         }
+        if (mBeer.getIngredients() != null) {
+            mBinding.content.tvIngredients.setText(mBeer.getIngredients().toString());
+        } else {
+            mBinding.content.tvLabelIngredients.setVisibility(View.GONE);
+            mBinding.content.tvIngredients.setVisibility(View.GONE);
+        }
         if (mBeer.getBreweries() != null) {
-            StringBuilder breweries = new StringBuilder();
-            for (Breweries brs : mBeer.getBreweries()) {
-                breweries.append(brs.getNameShortDisplay()).append(",");
-            }
-            breweries = new StringBuilder(breweries.toString().replaceFirst(".$", ""));
-            mBinding.content.tvBreweries.setText(breweries.toString());
+            mBinding.content.tvBreweries.setText(mBeer.getBreweriesString());
         } else {
             mBinding.content.tvBreweries.setVisibility(View.GONE);
             mBinding.content.tvLabelBreweries.setVisibility(View.GONE);
         }
+
+
         if (mBeer.getDescription() != null) {
             mBinding.content.tvDescription.setText(mBeer.getDescription());
         }

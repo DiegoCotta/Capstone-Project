@@ -51,15 +51,16 @@ public class BeersAdapter extends PagedListAdapter<Beer, RecyclerView.ViewHolder
         }
 
         public void bind(final Beer beer) {
-            binding.tvDescription.setText(beer.getDescription());
+            Picasso.get().load(R.mipmap.ic_launcher).fit().
+                    transform(new CircleTransform()).into(binding.ivBeer);
             binding.tvTitle.setText(beer.getName());
             if (beer.getLabels() != null)
-                Picasso.get().load(beer.getLabels().getIcon()).fit().
-                        transform(new CircleTransform()).into(binding.ivBeer);
-            else {
-                Picasso.get().load(R.mipmap.ic_launcher).fit().
-                        transform(new CircleTransform()).into(binding.ivBeer);
-            }
+                if (beer.getLabels().getIcon() != null)
+                    Picasso.get().load(beer.getLabels().getIcon()).fit().
+                            transform(new CircleTransform()).into(binding.ivBeer);
+                else if(beer.getLabels().getMedium() != null)
+                    Picasso.get().load(beer.getLabels().getMedium()).fit().
+                            transform(new CircleTransform()).into(binding.ivBeer);
 
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,6 +68,36 @@ public class BeersAdapter extends PagedListAdapter<Beer, RecyclerView.ViewHolder
                     listener.onItemClick(beer);
                 }
             });
+            if (beer.getIbu() != null)
+                binding.tvIbu.setText(beer.getIbu());
+            else if (beer.getStyle() != null && beer.getStyle().getIbuMin() != null) {
+                binding.tvIbu.setText(beer.getStyle().getIbuMin());
+            } else {
+                binding.tvIbu.setVisibility(View.GONE);
+                binding.tvLabelIbu.setVisibility(View.GONE);
+            }
+            if (beer.getAbv() != null)
+                binding.tvAbv.setText(String.format("%s%%", beer.getAbv()));
+            else if (beer.getStyle().getAbvMin() != null) {
+                binding.tvAbv.setText(String.format("%s%%", beer.getStyle().getAbvMin()));
+            } else {
+                binding.tvAbv.setVisibility(View.GONE);
+                binding.tvAbv.setVisibility(View.GONE);
+            }
+
+            if (beer.getStyle() != null) {
+                if (beer.getStyle().getShortName() != null)
+                    binding.tvStyle.setText(beer.getStyle().getShortName());
+                else if (beer.getStyle().getName() != null)
+                    binding.tvStyle.setText(beer.getStyle().getName());
+                else {
+                    binding.tvStyle.setVisibility(View.GONE);
+                    binding.tvLabelStyle.setVisibility(View.GONE);
+                }
+            } else {
+                binding.tvStyle.setVisibility(View.GONE);
+                binding.tvLabelStyle.setVisibility(View.GONE);
+            }
         }
 
     }

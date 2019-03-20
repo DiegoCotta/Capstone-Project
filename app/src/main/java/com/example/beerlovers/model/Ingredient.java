@@ -1,14 +1,11 @@
 package com.example.beerlovers.model;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-@Entity(tableName = "Ingredient" )
+
 public class Ingredient implements Parcelable {
-    @PrimaryKey
-    @NonNull
+
+
     private String id;
     private String name;
 

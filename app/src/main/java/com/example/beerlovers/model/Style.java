@@ -6,10 +6,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "Style")
+
 public class Style implements Parcelable {
-    @PrimaryKey
-    @NonNull
     private float id;
     private float categoryId;
     Category CategoryObject;

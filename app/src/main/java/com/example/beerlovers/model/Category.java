@@ -6,10 +6,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "Category")
+
 public class Category implements Parcelable {
-    @PrimaryKey
-    @NonNull
     private float id;
     private String name;
     private String createDate;

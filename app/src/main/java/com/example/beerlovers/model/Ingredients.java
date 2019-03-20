@@ -1,17 +1,12 @@
 package com.example.beerlovers.model;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
 import java.util.List;
 
-@Entity(tableName = "Ingredients")
+
 public class Ingredients implements Parcelable {
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
     int id;
     List<Ingredient> hops;
     List<Ingredient> yeast;
@@ -19,16 +14,9 @@ public class Ingredients implements Parcelable {
 
     protected Ingredients(Parcel in) {
         id = in.readInt();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        hops = in.createTypedArrayList(Ingredient.CREATOR);
+        yeast = in.createTypedArrayList(Ingredient.CREATOR);
+        malt = in.createTypedArrayList(Ingredient.CREATOR);
     }
 
     public static final Creator<Ingredients> CREATOR = new Creator<Ingredients>() {
@@ -73,5 +61,46 @@ public class Ingredients implements Parcelable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeTypedList(hops);
+        dest.writeTypedList(yeast);
+        dest.writeTypedList(malt);
+    }
+
+
+    @Override
+    public String toString() {
+        StringBuilder ingredients = new StringBuilder();
+        if (getHops() != null) {
+            ingredients.append("Hops:");
+            for (Ingredient ingredient : getHops()) {
+                ingredients.append(" ").append(ingredient.getName()).append(",");
+            }
+            ingredients = new StringBuilder(ingredients.toString().replaceFirst(".$", "\n"));
+        }
+        if (getMalt() != null) {
+            ingredients.append("Malt:");
+            for (Ingredient ingredient : getMalt()) {
+                ingredients.append(" ").append(ingredient.getName()).append(",");
+            }
+            ingredients = new StringBuilder(ingredients.toString().replaceFirst(".$", "\n"));
+        }
+        if (getYeast() != null) {
+            ingredients.append("Yeast:");
+            for (Ingredient ingredient : getYeast()) {
+                ingredients.append(" ").append(ingredient.getName()).append(",");
+            }
+        }
+        ingredients = new StringBuilder(ingredients.toString().replaceFirst(".$", ""));
+        return ingredients.toString();
     }
 }

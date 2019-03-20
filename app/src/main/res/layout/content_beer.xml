@@ -8,8 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toTopOf="@+id/tv_label_ibu"
-        app:layout_constraintTop_toTopOf="@+id/tv_label_ibu"
         tools:context=".view.activities.BeerActivity"
         tools:showIn="@layout/activity_beer">
 
@@ -43,7 +41,7 @@
             android:id="@+id/tv_label_abv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="4dp"
             android:fontFamily="sans-serif-medium"
@@ -97,6 +95,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
+        <android.support.constraint.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tv_retired,tv_label_abv,tv_ibu,tv_organic,tv_abv,tv_label_ibu"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
             android:id="@+id/tv_label_style"
             android:layout_width="wrap_content"
@@ -108,7 +115,7 @@
             android:textColor="@color/colorAccentText"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_ibu" />
+            app:layout_constraintTop_toBottomOf="@+id/barrier" />
 
         <TextView
             android:id="@+id/tv_style"

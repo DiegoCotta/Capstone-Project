@@ -6,10 +6,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "Labels")
+
 public class Labels implements Parcelable {
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
     private int id;
     private String icon;
     private String medium;

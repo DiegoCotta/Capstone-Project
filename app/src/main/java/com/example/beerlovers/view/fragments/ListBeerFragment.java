@@ -23,27 +23,34 @@ import android.widget.TextView;
 import com.example.beerlovers.R;
 import com.example.beerlovers.databinding.ListBeerFragmentBinding;
 import com.example.beerlovers.model.Beer;
-import com.example.beerlovers.model.FragmentType;
+import com.example.beerlovers.model.DBBeer;
+import com.example.beerlovers.model.ListType;
 import com.example.beerlovers.model.NetworkState;
 import com.example.beerlovers.utils.Utils;
-import com.example.beerlovers.view.activities.BeerActivity;
+import com.example.beerlovers.view.activities.BeerDetailsActivity;
+import com.example.beerlovers.view.adapters.BeerViewHolder;
 import com.example.beerlovers.view.adapters.BeersAdapter;
+import com.example.beerlovers.view.adapters.BeersPagedListAdapter;
 import com.example.beerlovers.viewmodel.ListBeerViewModel;
+
+import java.util.List;
 
 import br.com.zup.multistatelayout.MultiStateLayout;
 
 
-public class ListBeerFragment extends Fragment implements BeersAdapter.BeersAdapterListener {
+public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAdapterListener {
 
 
     public static final String LIST_TYPE = "list-type";
     private ListBeerFragmentBinding binding;
     private ListBeerViewModel mViewModel;
-    private BeersAdapter adapter;
+    private BeersPagedListAdapter beersPagedListAdapter;
+    private BeersAdapter beersAdapter;
 
-    FragmentType type;
 
-    public static ListBeerFragment newInstance(FragmentType type) {
+    ListType type;
+
+    public static ListBeerFragment newInstance(ListType type) {
         Bundle args = new Bundle();
         args.putSerializable(LIST_TYPE, type);
         ListBeerFragment fragment = new ListBeerFragment();
@@ -59,7 +66,10 @@ public class ListBeerFragment extends Fragment implements BeersAdapter.BeersAdap
         View view = binding.getRoot();
         setHasOptionsMenu(true);
         if (getArguments() != null && getArguments().get(LIST_TYPE) != null)
-            type = (FragmentType) getArguments().getSerializable(LIST_TYPE);
+            type = (ListType) getArguments().getSerializable(LIST_TYPE);
+
+        if (type != ListType.NETWORK)
+            setHasOptionsMenu(false);
 
         return view;
     }
@@ -68,16 +78,40 @@ public class ListBeerFragment extends Fragment implements BeersAdapter.BeersAdap
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(ListBeerViewModel.class);
-        mViewModel.init(type);
-        binding.rvList.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new BeersAdapter(ListBeerFragment.this);
 
-        mViewModel.getBeersLiveData().observe(ListBeerFragment.this, new Observer<PagedList<Beer>>() {
-            @Override
-            public void onChanged(@Nullable PagedList<Beer> pagedList) {
-                adapter.submitList(pagedList);
+        binding.rvList.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        if (type == ListType.NETWORK) {
+            mViewModel.initPagedList();
+            beersPagedListAdapter = new BeersPagedListAdapter(ListBeerFragment.this);
+
+            mViewModel.getPagedListBeersLiveData().observe(ListBeerFragment.this, new Observer<PagedList<Beer>>() {
+                @Override
+                public void onChanged(@Nullable PagedList<Beer> pagedList) {
+                    beersPagedListAdapter.submitList(pagedList);
+                }
+            });
+            binding.rvList.setAdapter(beersPagedListAdapter);
+        } else {
+            if (type == ListType.FAVORITE) {
+                mViewModel.getFavoritesBeers().observe(this, new Observer<List<DBBeer>>() {
+                    @Override
+                    public void onChanged(@Nullable List<DBBeer> dbBeers) {
+                        beersAdapter = new BeersAdapter(ListBeerFragment.this, dbBeers);
+                        binding.rvList.setAdapter(beersAdapter);
+                    }
+                });
+            } else if (type == ListType.TASTED) {
+                mViewModel.getTastedBeers().observe(this, new Observer<List<DBBeer>>() {
+                    @Override
+                    public void onChanged(@Nullable List<DBBeer> dbBeers) {
+                        beersAdapter = new BeersAdapter(ListBeerFragment.this, dbBeers);
+                        binding.rvList.setAdapter(beersAdapter);
+                    }
+                });
             }
-        });
+
+        }
 
         mViewModel.getNetworkState().observe(this, new Observer<NetworkState>() {
             @Override
@@ -85,7 +119,7 @@ public class ListBeerFragment extends Fragment implements BeersAdapter.BeersAdap
                 if (networkState == NetworkState.LOADING) {
                     binding.mslView.setState(MultiStateLayout.State.LOADING);
                 } else if (networkState == NetworkState.LOADED) {
-                    if (adapter.getItemCount() == 0) {
+                    if (beersPagedListAdapter.getItemCount() == 0) {
                         binding.mslView.setState(MultiStateLayout.State.EMPTY);
                     } else {
                         binding.mslView.setState(MultiStateLayout.State.CONTENT);
@@ -109,14 +143,12 @@ public class ListBeerFragment extends Fragment implements BeersAdapter.BeersAdap
             }
         });
 
-        binding.rvList.setAdapter(adapter);
-
 
     }
 
     public void loadData() {
         binding.mslView.setState(MultiStateLayout.State.LOADING);
-        mViewModel.getBeersLiveData().getValue().getDataSource().invalidate();
+        mViewModel.getPagedListBeersLiveData().getValue().getDataSource().invalidate();
     }
 
     @Override
@@ -145,8 +177,15 @@ public class ListBeerFragment extends Fragment implements BeersAdapter.BeersAdap
 
     @Override
     public void onItemClick(Beer beer) {
-        Intent intent = new Intent(getActivity(), BeerActivity.class);
-        intent.putExtra(BeerActivity.BEER_KEY, beer);
+        Intent intent = new Intent(getActivity(), BeerDetailsActivity.class);
+        intent.putExtra(BeerDetailsActivity.BEER_KEY, beer);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(DBBeer beer) {
+        Intent intent = new Intent(getActivity(), BeerDetailsActivity.class);
+        intent.putExtra(BeerDetailsActivity.BEER_FROM_DB_KEY, beer);
         startActivity(intent);
     }
 }

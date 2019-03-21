@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import com.example.beerlovers.R;
 import com.example.beerlovers.databinding.ActivityMainBinding;
-import com.example.beerlovers.model.FragmentType;
+import com.example.beerlovers.model.ListType;
 import com.example.beerlovers.view.fragments.ListBeerFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,17 +24,16 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragment = null;
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    fragment = ListBeerFragment.newInstance(FragmentType.SEARCH);
-
                 case R.id.navigation_favorite:
-                    fragment = ListBeerFragment.newInstance(FragmentType.FAVORITE);
-
+                    fragment = ListBeerFragment.newInstance(ListType.FAVORITE);
+                    break;
                 case R.id.navigation_tasted:
-                    fragment = ListBeerFragment.newInstance(FragmentType.TASTED);
-
+                    fragment = ListBeerFragment.newInstance(ListType.TASTED);
+                    break;
+                default:
+                    fragment = ListBeerFragment.newInstance(ListType.NETWORK);
+                    break;
             }
-
             return loadFragment(fragment);
         }
     };
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        loadFragment(ListBeerFragment.newInstance(FragmentType.SEARCH));
+        loadFragment(ListBeerFragment.newInstance(ListType.NETWORK));
 
     }
 

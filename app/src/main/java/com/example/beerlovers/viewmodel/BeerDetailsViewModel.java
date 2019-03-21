@@ -28,7 +28,7 @@ public class BeerDetailsViewModel extends AndroidViewModel {
     }
 
     public void changeFavorite() {
-        if (dbBeer == null) {
+        if (dbBeer.getValue() == null) {
             final DBBeer b = beer.toDB();
             b.setFavorite(true);
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
@@ -83,5 +83,16 @@ public class BeerDetailsViewModel extends AndroidViewModel {
 
     public void setBeer(Beer beer) {
         this.beer = beer;
+    }
+
+    public void checkBeer() {
+        if (dbBeer.getValue() != null && !dbBeer.getValue().isFavorite() && !dbBeer.getValue().isTasted()) {
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    database.beerDao().deleteBeer(dbBeer.getValue());
+                }
+            });
+        }
     }
 }

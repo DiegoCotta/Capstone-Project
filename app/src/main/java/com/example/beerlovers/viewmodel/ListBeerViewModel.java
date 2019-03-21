@@ -4,17 +4,19 @@ import android.app.Application;
 import android.arch.core.util.Function;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 
-import com.example.beerlovers.R;
+import com.example.beerlovers.dao.AppDatabase;
 import com.example.beerlovers.model.Beer;
-import com.example.beerlovers.model.FragmentType;
+import com.example.beerlovers.model.DBBeer;
 import com.example.beerlovers.model.NetworkState;
 import com.example.beerlovers.service.BeersDataSource;
 
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -23,11 +25,17 @@ public class ListBeerViewModel extends AndroidViewModel {
 
     private Executor executor;
     private LiveData<NetworkState> networkState;
-    private LiveData<PagedList<Beer>> beersLiveData;
+    private LiveData<PagedList<Beer>> beersPagedListLiveData;
+    private LiveData<List<DBBeer>> beersLiveData;
     BeersDataFactory feedDataFactory;
     PagedList.Config pagedListConfig;
+    private final AppDatabase database;
+
     public ListBeerViewModel(@NonNull Application application) {
         super(application);
+        database = AppDatabase.getInstance(this.getApplication());
+        beersLiveData = new MutableLiveData<>();
+        networkState = new MutableLiveData<>();
     }
 
     public LiveData<NetworkState> getNetworkState() {
@@ -37,8 +45,8 @@ public class ListBeerViewModel extends AndroidViewModel {
     /*
      * Getter method for the pageList
      */
-    public LiveData<PagedList<Beer>> getBeersLiveData() {
-        return beersLiveData;
+    public LiveData<PagedList<Beer>> getPagedListBeersLiveData() {
+        return beersPagedListLiveData;
 
     }
 
@@ -46,7 +54,7 @@ public class ListBeerViewModel extends AndroidViewModel {
         feedDataFactory.setSearch(textSearch);
     }
 
-    public void init(FragmentType type) {
+    public void initPagedList() {
         executor = Executors.newFixedThreadPool(5);
         feedDataFactory = new BeersDataFactory();
         networkState = Transformations.switchMap(feedDataFactory.getMutableLiveData(),
@@ -65,8 +73,19 @@ public class ListBeerViewModel extends AndroidViewModel {
                         .build();
 
 
-        beersLiveData = (new LivePagedListBuilder(feedDataFactory, pagedListConfig))
+        beersPagedListLiveData = (new LivePagedListBuilder(feedDataFactory, pagedListConfig))
                 .setFetchExecutor(executor)
                 .build();
+    }
+
+
+    public LiveData<List<DBBeer>> getFavoritesBeers() {
+        beersLiveData = database.beerDao().getFavoriteBeers();
+        return beersLiveData;
+    }
+
+    public LiveData<List<DBBeer>> getTastedBeers() {
+        beersLiveData = database.beerDao().getTastedBeers();
+        return beersLiveData;
     }
 }

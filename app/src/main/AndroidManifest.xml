@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.activities.BeerActivity"
+            android:name=".view.activities.BeerDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data

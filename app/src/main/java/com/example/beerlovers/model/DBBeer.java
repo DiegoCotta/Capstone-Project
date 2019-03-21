@@ -1,10 +1,13 @@
 package com.example.beerlovers.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 @Entity(tableName = "Beer")
-public class DBBeer {
+public class DBBeer implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String stringId;
@@ -27,7 +30,7 @@ public class DBBeer {
     public DBBeer() {
     }
 
-    DBBeer(String stringId,String name, String description, String abv, String ibu, boolean isOrganic, boolean isRetired, String foodPairings, String icon, String image, String glass, String style, String breweries, String ingredients, boolean favorite, boolean tasted) {
+    DBBeer(String stringId, String name, String description, String abv, String ibu, boolean isOrganic, boolean isRetired, String foodPairings, String icon, String image, String glass, String style, String breweries, String ingredients, boolean favorite, boolean tasted) {
         this.name = name;
         this.stringId = stringId;
         this.description = description;
@@ -45,6 +48,65 @@ public class DBBeer {
         this.favorite = favorite;
         this.tasted = tasted;
     }
+
+    @Ignore
+    protected DBBeer(Parcel in) {
+        id = in.readInt();
+        stringId = in.readString();
+        name = in.readString();
+        description = in.readString();
+        abv = in.readString();
+        ibu = in.readString();
+        organic = in.readByte() != 0;
+        retired = in.readByte() != 0;
+        foodPairings = in.readString();
+        icon = in.readString();
+        image = in.readString();
+        glass = in.readString();
+        style = in.readString();
+        breweries = in.readString();
+        ingredients = in.readString();
+        favorite = in.readByte() != 0;
+        tasted = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(stringId);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(abv);
+        dest.writeString(ibu);
+        dest.writeByte((byte) (organic ? 1 : 0));
+        dest.writeByte((byte) (retired ? 1 : 0));
+        dest.writeString(foodPairings);
+        dest.writeString(icon);
+        dest.writeString(image);
+        dest.writeString(glass);
+        dest.writeString(style);
+        dest.writeString(breweries);
+        dest.writeString(ingredients);
+        dest.writeByte((byte) (favorite ? 1 : 0));
+        dest.writeByte((byte) (tasted ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<DBBeer> CREATOR = new Creator<DBBeer>() {
+        @Override
+        public DBBeer createFromParcel(Parcel in) {
+            return new DBBeer(in);
+        }
+
+        @Override
+        public DBBeer[] newArray(int size) {
+            return new DBBeer[size];
+        }
+    };
 
     public int getId() {
         return id;

@@ -3,6 +3,7 @@ package com.example.beerlovers.viewmodel;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.paging.DataSource;
 
+
 import com.example.beerlovers.service.BeersDataSource;
 
 public class BeersDataFactory extends DataSource.Factory {

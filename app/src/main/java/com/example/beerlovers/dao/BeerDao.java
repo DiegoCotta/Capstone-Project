@@ -19,12 +19,14 @@ public interface BeerDao {
     @Query("SELECT * FROM Beer WHERE favorite = 1")
     LiveData<List<DBBeer>> getFavoriteBeers();
 
-
     @Query("SELECT * FROM Beer WHERE stringId = :id")
     LiveData<DBBeer> getBeer(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(DBBeer beer);
+
+    @Delete
+    void deleteBeer(DBBeer beer);
 
 }
 

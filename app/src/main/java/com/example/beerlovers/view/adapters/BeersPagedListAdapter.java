@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.example.beerlovers.R;
 import com.example.beerlovers.databinding.ItemListBeerBinding;
-import com.example.beerlovers.databinding.LastViewItemBinding;
 import com.example.beerlovers.model.Beer;
 import com.example.beerlovers.model.NetworkState;
 import com.example.beerlovers.utils.CircleTransform;

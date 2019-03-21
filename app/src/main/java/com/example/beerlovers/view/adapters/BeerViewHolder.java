@@ -38,21 +38,29 @@ public class BeerViewHolder extends RecyclerView.ViewHolder {
                 listener.onItemClick(beer);
             }
         });
-        if (beer.getIbu() != null)
+        if (beer.getIbu() != null) {
             binding.tvIbu.setText(beer.getIbu());
-        else if (beer.getStyle() != null && beer.getStyle().getIbuMin() != null) {
+            binding.tvIbu.setVisibility(View.VISIBLE);
+            binding.tvLabelIbu.setVisibility(View.VISIBLE);
+        }else if (beer.getStyle() != null && beer.getStyle().getIbuMin() != null) {
             binding.tvIbu.setText(beer.getStyle().getIbuMin());
+            binding.tvIbu.setVisibility(View.VISIBLE);
+            binding.tvLabelIbu.setVisibility(View.VISIBLE);
         } else {
             binding.tvIbu.setVisibility(View.GONE);
             binding.tvLabelIbu.setVisibility(View.GONE);
         }
-        if (beer.getAbv() != null)
+        if (beer.getAbv() != null) {
             binding.tvAbv.setText(String.format("%s%%", beer.getAbv()));
-        else if (beer.getStyle().getAbvMin() != null) {
+            binding.tvAbv.setVisibility(View.VISIBLE);
+            binding.tvLabelAbv.setVisibility(View.VISIBLE);
+        }else if (beer.getStyle().getAbvMin() != null) {
             binding.tvAbv.setText(String.format("%s%%", beer.getStyle().getAbvMin()));
+            binding.tvAbv.setVisibility(View.VISIBLE);
+            binding.tvLabelAbv.setVisibility(View.VISIBLE);
         } else {
             binding.tvAbv.setVisibility(View.GONE);
-            binding.tvAbv.setVisibility(View.GONE);
+            binding.tvLabelAbv.setVisibility(View.GONE);
         }
 
         if (beer.getStyle() != null) {

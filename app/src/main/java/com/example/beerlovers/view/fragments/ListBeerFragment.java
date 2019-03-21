@@ -11,14 +11,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.beerlovers.R;
 import com.example.beerlovers.databinding.ListBeerFragmentBinding;
@@ -170,6 +173,20 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
             public boolean onQueryTextSubmit(String query) {
                 mViewModel.searchBeer(query);
                 return false;
+            }
+        });
+        MenuItem item = menu.findItem(R.id.search);
+        item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                mViewModel.searchBeer("");
+                return true;
             }
         });
         super.onCreateOptionsMenu(menu, inflater);

@@ -235,7 +235,7 @@ public class Beer implements Parcelable {
         }
 
         String abv = "";
-        if (getIbu() != null) {
+        if (getAbv() != null) {
             abv = getAbv();
         } else if (getStyle() != null && getStyle().getAbvMin() != null) {
             abv = getStyle().getAbvMin();
@@ -247,10 +247,11 @@ public class Beer implements Parcelable {
             if (getLabels().getIcon() != null) {
                 icon = getLabels().getIcon();
             }
-            if (getLabels().getMedium() != null) {
+            if (getLabels().getLarge() != null) {
+                image = getLabels().getLarge();
+            } else if (getLabels().getMedium() != null) {
                 image = getLabels().getMedium();
             }
-
         }
         return new DBBeer(
                 getId(),
@@ -264,7 +265,7 @@ public class Beer implements Parcelable {
                 icon,
                 image,
                 glass != null ? glass.getName() : null,
-                style != null ? style.getName() : null,
+                style != null ? style.getShortName() : null,
                 getBreweries() != null ? getBreweriesString() : null,
                 getIngredients() != null ? getIngredients().toString() : null,
                 false,

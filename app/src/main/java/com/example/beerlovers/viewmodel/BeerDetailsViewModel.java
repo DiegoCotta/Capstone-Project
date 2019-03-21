@@ -21,6 +21,7 @@ public class BeerDetailsViewModel extends AndroidViewModel {
         super(application);
         database = AppDatabase.getInstance(this.getApplication());
         dbBeer = new MutableLiveData<>();
+
     }
 
     public void getBeer(String id) {
@@ -73,8 +74,8 @@ public class BeerDetailsViewModel extends AndroidViewModel {
         return dbBeer;
     }
 
-    public void setDbBeer(LiveData<DBBeer> dbBeer) {
-        this.dbBeer = dbBeer;
+    public void setDbBeer(DBBeer dbBeer) {
+        ((MutableLiveData<DBBeer>) this.dbBeer).setValue(dbBeer);
     }
 
     public Beer getBeer() {

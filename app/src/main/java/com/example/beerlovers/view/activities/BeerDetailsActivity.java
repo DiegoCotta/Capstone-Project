@@ -128,7 +128,68 @@ public class BeerDetailsActivity extends AppCompatActivity {
             }
 
         } else if (mDBBeer != null) {
+            if (mDBBeer.getImage() != null) {
+                Picasso.get().load(mDBBeer.getImage()).fit().into(mBinding.photo);
+            }
+            if (getSupportActionBar() != null)
+                getSupportActionBar().setTitle(mDBBeer.getName());
 
+            if (!mDBBeer.getIbu().equals(""))
+                mBinding.content.tvIbu.setText(mDBBeer.getIbu());
+            else {
+                mBinding.content.tvIbu.setVisibility(View.GONE);
+                mBinding.content.tvLabelIbu.setVisibility(View.GONE);
+            }
+            if (!mDBBeer.getAbv().equals(""))
+                mBinding.content.tvAbv.setText(String.format("%s%%", mDBBeer.getAbv()));
+            else {
+                mBinding.content.tvAbv.setVisibility(View.GONE);
+                mBinding.content.tvAbv.setVisibility(View.GONE);
+            }
+            if (!mDBBeer.isRetired())
+                mBinding.content.tvRetired.setVisibility(View.GONE);
+            if (!mDBBeer.isOrganic())
+                mBinding.content.tvOrganic.setVisibility(View.GONE);
+
+            if (mDBBeer.getStyle() != null) {
+                if (!mDBBeer.getStyle().equals(""))
+                    mBinding.content.tvStyle.setText(mDBBeer.getStyle());
+                else {
+                    mBinding.content.tvStyle.setVisibility(View.GONE);
+                    mBinding.content.tvLabelStyle.setVisibility(View.GONE);
+                }
+            } else {
+                mBinding.content.tvStyle.setVisibility(View.GONE);
+                mBinding.content.tvLabelStyle.setVisibility(View.GONE);
+            }
+            if (mDBBeer.getGlass() != null) {
+                mBinding.content.tvGlass.setText(mDBBeer.getGlass());
+            } else {
+                mBinding.content.tvGlass.setVisibility(View.GONE);
+                mBinding.content.tvLabelGlass.setVisibility(View.GONE);
+            }
+            if (mDBBeer.getFoodPairings() != null) {
+                mBinding.content.tvFoodPairings.setText(mDBBeer.getFoodPairings());
+            } else {
+                mBinding.content.tvFoodPairings.setVisibility(View.GONE);
+                mBinding.content.tvLabelFoodPairings.setVisibility(View.GONE);
+            }
+            if (mDBBeer.getIngredients() != null) {
+                mBinding.content.tvIngredients.setText(mDBBeer.getIngredients().toString());
+            } else {
+                mBinding.content.tvLabelIngredients.setVisibility(View.GONE);
+                mBinding.content.tvIngredients.setVisibility(View.GONE);
+            }
+            if (mDBBeer.getBreweries() != null) {
+                mBinding.content.tvBreweries.setText(mDBBeer.getBreweries());
+            } else {
+                mBinding.content.tvBreweries.setVisibility(View.GONE);
+                mBinding.content.tvLabelBreweries.setVisibility(View.GONE);
+            }
+
+            if (mDBBeer.getDescription() != null) {
+                mBinding.content.tvDescription.setText(mDBBeer.getDescription());
+            }
         }
 
     }
@@ -161,8 +222,14 @@ public class BeerDetailsActivity extends AppCompatActivity {
 
     private void setupViewModel() {
         mViewModel = ViewModelProviders.of(this).get(BeerDetailsViewModel.class);
-        mViewModel.getBeer(mBeer.getId());
-        mViewModel.setBeer(mBeer);
+        if (mBeer != null) {
+            mViewModel.setBeer(mBeer);
+            mViewModel.getBeer(mBeer.getId());
+
+        } else {
+            mViewModel.getBeer(mDBBeer.getStringId());
+        }
+
         mViewModel.getDbBeer().observe(this, new Observer<DBBeer>() {
             @Override
             public void onChanged(@Nullable DBBeer beer) {

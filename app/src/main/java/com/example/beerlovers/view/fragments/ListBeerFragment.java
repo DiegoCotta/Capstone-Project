@@ -52,6 +52,7 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
 
 
     ListType type;
+    private boolean isSearch;
 
     public static ListBeerFragment newInstance(ListType type) {
         Bundle args = new Bundle();
@@ -172,6 +173,7 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
 
             public boolean onQueryTextSubmit(String query) {
                 mViewModel.searchBeer(query);
+                isSearch = true;
                 return false;
             }
         });
@@ -179,13 +181,14 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
         item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem menuItem) {
-
+                isSearch = false;
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                mViewModel.searchBeer("");
+                if(isSearch)
+                    mViewModel.searchBeer("");
                 return true;
             }
         });

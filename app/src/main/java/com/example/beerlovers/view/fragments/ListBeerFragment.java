@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,6 +36,12 @@ import com.example.beerlovers.view.adapters.BeerViewHolder;
 import com.example.beerlovers.view.adapters.BeersAdapter;
 import com.example.beerlovers.view.adapters.BeersPagedListAdapter;
 import com.example.beerlovers.viewmodel.ListBeerViewModel;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -50,7 +57,10 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
     private BeersPagedListAdapter beersPagedListAdapter;
     private BeersAdapter beersAdapter;
 
+    private InterstitialAd mInterstitialAd;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
+    private String querySearch = "";
     ListType type;
     private boolean isSearch;
 
@@ -74,6 +84,47 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
 
         if (type != ListType.NETWORK)
             setHasOptionsMenu(false);
+
+
+        AdView adView = new AdView(requireContext());
+        adView.setAdSize(AdSize.BANNER);
+        adView.setAdUnitId("ca-app-pub-3940256099942544~3347511713");
+        AdRequest adRequest = new AdRequest.Builder().build();
+        binding.adView.loadAd(adRequest);
+        mInterstitialAd = new InterstitialAd(requireContext());
+        mInterstitialAd.setAdUnitId(getString(R.string.AD_KEY));
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.setAdListener(new AdListener() {
+
+            @Override
+            public void onAdLoaded() {
+                mInterstitialAd.show();
+                super.onAdLoaded();
+
+            }
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                mViewModel.searchBeer(querySearch);
+                Bundle bundle =  new Bundle();
+                bundle.putString("query", querySearch);
+                mFirebaseAnalytics.logEvent("Search", bundle);
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                mViewModel.searchBeer(querySearch);
+                Bundle bundle =  new Bundle();
+                bundle.putString("query", querySearch);
+                mFirebaseAnalytics.logEvent("Search", bundle);
+            }
+        });
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(requireContext());
+        Bundle bundle =  new Bundle();
+        bundle.putString("name", type.toString());
+        mFirebaseAnalytics.logEvent("screen", bundle);
 
         return view;
     }
@@ -172,7 +223,16 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
             }
 
             public boolean onQueryTextSubmit(String query) {
-                mViewModel.searchBeer(query);
+                querySearch = query;
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    mViewModel.searchBeer(querySearch);
+                    Bundle bundle =  new Bundle();
+                    bundle.putString("query", querySearch);
+                    mFirebaseAnalytics.logEvent("Search", bundle);
+                }
+
                 isSearch = true;
                 return false;
             }
@@ -187,8 +247,11 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                if(isSearch)
+                if (isSearch) {
                     mViewModel.searchBeer("");
+                    querySearch = "";
+
+                }
                 return true;
             }
         });

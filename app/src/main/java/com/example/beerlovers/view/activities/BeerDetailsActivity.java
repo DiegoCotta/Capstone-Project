@@ -18,6 +18,7 @@ import com.example.beerlovers.databinding.ActivityBeerBinding;
 import com.example.beerlovers.model.Beer;
 import com.example.beerlovers.model.DBBeer;
 import com.example.beerlovers.viewmodel.BeerDetailsViewModel;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 public class BeerDetailsActivity extends AppCompatActivity {
@@ -29,23 +30,33 @@ public class BeerDetailsActivity extends AppCompatActivity {
     private ActivityBeerBinding mBinding;
     private BeerDetailsViewModel mViewModel;
     private Menu menu;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_beer);
-        if (getIntent() != null && getIntent().hasExtra(BEER_KEY))
+        Bundle bundle = new Bundle();
+        if (getIntent() != null && getIntent().hasExtra(BEER_KEY)) {
             mBeer = getIntent().getParcelableExtra(BEER_KEY);
-        if (getIntent() != null && getIntent().hasExtra(BEER_FROM_DB_KEY))
+            bundle.putString("name", mBeer.getName());
+        }
+        if (getIntent() != null && getIntent().hasExtra(BEER_FROM_DB_KEY)) {
             mDBBeer = getIntent().getParcelableExtra(BEER_FROM_DB_KEY);
+            bundle.putString("name", mDBBeer.getName());
+        }
+
         setSupportActionBar(mBinding.toolbar);
         mBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mViewModel.changeTasted();
+
             }
         });
+        mFirebaseAnalytics.logEvent("screen", bundle);
 
 
         Picasso.get().load(R.mipmap.ic_launcher).fit().into(mBinding.photo);

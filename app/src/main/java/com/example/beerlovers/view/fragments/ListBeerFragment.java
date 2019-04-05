@@ -85,12 +85,6 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
         if (type != ListType.NETWORK)
             setHasOptionsMenu(false);
 
-
-        AdView adView = new AdView(requireContext());
-        adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId("ca-app-pub-3940256099942544~3347511713");
-        AdRequest adRequest = new AdRequest.Builder().build();
-        binding.adView.loadAd(adRequest);
         mInterstitialAd = new InterstitialAd(requireContext());
         mInterstitialAd.setAdUnitId(getString(R.string.AD_KEY));
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
@@ -102,11 +96,12 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
                 super.onAdLoaded();
 
             }
+
             @Override
             public void onAdClosed() {
                 super.onAdClosed();
                 mViewModel.searchBeer(querySearch);
-                Bundle bundle =  new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putString("query", querySearch);
                 mFirebaseAnalytics.logEvent("Search", bundle);
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
@@ -116,13 +111,13 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
                 mViewModel.searchBeer(querySearch);
-                Bundle bundle =  new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putString("query", querySearch);
                 mFirebaseAnalytics.logEvent("Search", bundle);
             }
         });
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(requireContext());
-        Bundle bundle =  new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("name", type.toString());
         mFirebaseAnalytics.logEvent("screen", bundle);
 
@@ -228,7 +223,7 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
                     mInterstitialAd.show();
                 } else {
                     mViewModel.searchBeer(querySearch);
-                    Bundle bundle =  new Bundle();
+                    Bundle bundle = new Bundle();
                     bundle.putString("query", querySearch);
                     mFirebaseAnalytics.logEvent("Search", bundle);
                 }
@@ -270,5 +265,22 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
         Intent intent = new Intent(getActivity(), BeerDetailsActivity.class);
         intent.putExtra(BeerDetailsActivity.BEER_FROM_DB_KEY, beer);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDeleteClick(DBBeer beer) {
+        if (type == ListType.TASTED) {
+            if (beer.isFavorite()) {
+                beer.setTasted(false);
+                mViewModel.updateBeer(beer);
+            } else
+                mViewModel.removeBeer(beer);
+        } else if (type == ListType.FAVORITE) {
+            if (beer.isTasted()) {
+                beer.setFavorite(false);
+                mViewModel.updateBeer(beer);
+            } else
+                mViewModel.removeBeer(beer);
+        }
     }
 }

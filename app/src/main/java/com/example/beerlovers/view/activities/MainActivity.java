@@ -12,6 +12,9 @@ import com.example.beerlovers.R;
 import com.example.beerlovers.databinding.ActivityMainBinding;
 import com.example.beerlovers.model.ListType;
 import com.example.beerlovers.view.fragments.ListBeerFragment;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         loadFragment(ListBeerFragment.newInstance(ListType.NETWORK));
+        AdView adView = new AdView(this);
+        adView.setAdSize(AdSize.BANNER);
+        adView.setAdUnitId("ca-app-pub-3940256099942544~3347511713");
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mBinding.adView.loadAd(adRequest);
 
     }
 

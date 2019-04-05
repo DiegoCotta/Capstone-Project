@@ -20,16 +20,6 @@
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             tools:context=".view.fragments.ListBeerFragment"
             tools:listitem="@layout/item_list_beer" />
-        <com.google.android.gms.ads.AdView
-            android:layout_gravity="center|bottom"
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
-        </com.google.android.gms.ads.AdView>
+
     </br.com.zup.multistatelayout.MultiStateLayout>
 </layout>

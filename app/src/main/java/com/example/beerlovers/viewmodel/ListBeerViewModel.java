@@ -15,6 +15,7 @@ import com.example.beerlovers.model.Beer;
 import com.example.beerlovers.model.DBBeer;
 import com.example.beerlovers.model.NetworkState;
 import com.example.beerlovers.service.BeersDataSource;
+import com.example.beerlovers.utils.AppExecutors;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -87,5 +88,26 @@ public class ListBeerViewModel extends AndroidViewModel {
     public LiveData<List<DBBeer>> getTastedBeers() {
         beersLiveData = database.beerDao().getTastedBeers();
         return beersLiveData;
+    }
+
+    public void removeBeer(final DBBeer beer) {
+        if (!beer.isFavorite() && !beer.isTasted()) {
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    database.beerDao().deleteBeer(beer);
+                }
+            });
+        }
+
+    }
+
+    public void updateBeer(final DBBeer beer) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                database.beerDao().insert(beer);
+            }
+        });
     }
 }

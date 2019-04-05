@@ -42,7 +42,7 @@ public class BeerViewHolder extends RecyclerView.ViewHolder {
             binding.tvIbu.setText(beer.getIbu());
             binding.tvIbu.setVisibility(View.VISIBLE);
             binding.tvLabelIbu.setVisibility(View.VISIBLE);
-        }else if (beer.getStyle() != null && beer.getStyle().getIbuMin() != null) {
+        } else if (beer.getStyle() != null && beer.getStyle().getIbuMin() != null) {
             binding.tvIbu.setText(beer.getStyle().getIbuMin());
             binding.tvIbu.setVisibility(View.VISIBLE);
             binding.tvLabelIbu.setVisibility(View.VISIBLE);
@@ -54,7 +54,7 @@ public class BeerViewHolder extends RecyclerView.ViewHolder {
             binding.tvAbv.setText(String.format("%s%%", beer.getAbv()));
             binding.tvAbv.setVisibility(View.VISIBLE);
             binding.tvLabelAbv.setVisibility(View.VISIBLE);
-        }else if (beer.getStyle().getAbvMin() != null) {
+        } else if (beer.getStyle().getAbvMin() != null) {
             binding.tvAbv.setText(String.format("%s%%", beer.getStyle().getAbvMin()));
             binding.tvAbv.setVisibility(View.VISIBLE);
             binding.tvLabelAbv.setVisibility(View.VISIBLE);
@@ -76,6 +76,8 @@ public class BeerViewHolder extends RecyclerView.ViewHolder {
             binding.tvStyle.setVisibility(View.GONE);
             binding.tvLabelStyle.setVisibility(View.GONE);
         }
+
+
     }
 
     public void bind(final DBBeer beer) {
@@ -120,13 +122,21 @@ public class BeerViewHolder extends RecyclerView.ViewHolder {
             binding.tvStyle.setVisibility(View.GONE);
             binding.tvLabelStyle.setVisibility(View.GONE);
         }
-
+        binding.ivDelete.setVisibility(View.VISIBLE);
+        binding.ivDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onDeleteClick(beer);
+            }
+        });
     }
 
     public interface BeersAdapterListener {
         void onItemClick(Beer beer);
 
         void onItemClick(DBBeer beer);
+
+        void onDeleteClick(DBBeer beer);
     }
 }
 

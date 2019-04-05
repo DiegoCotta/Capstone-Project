@@ -48,6 +48,7 @@ public class UpdateWidgetService extends IntentService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        stopSelf();
 
     }
 

@@ -87,7 +87,6 @@ public class AppWidget extends AppWidgetProvider {
 
     public static void updateWidget(Context context, AppWidgetManager appWidgetManager,
                                     int appWidgetId, Beer beer) {
-
         updateAppWidget(context, appWidgetManager, appWidgetId, beer);
 
     }

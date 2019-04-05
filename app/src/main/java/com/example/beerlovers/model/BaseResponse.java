@@ -6,7 +6,7 @@ public class BaseResponse<T> {
     private int currentPage;
     private int numberOfPages;
     private int totalResults;
-    List<T> data;
+    T data;
     private String status;
 
     public int getCurrentPage() {
@@ -41,11 +41,11 @@ public class BaseResponse<T> {
         this.status = status;
     }
 
-    public List<T> getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(List<T> data) {
+    public void setData(T data) {
         this.data = data;
     }
 }

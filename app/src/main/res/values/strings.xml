@@ -18,4 +18,5 @@
     <string name="ingredients">Ingredients:</string>
     <string name="food">Food Pairings:</string>
     <string name="breweries">Breweries:</string>
+    <string name="widget_text">"Style: %s    IBU: %s    ABV: %s%%"</string>
 </resources>

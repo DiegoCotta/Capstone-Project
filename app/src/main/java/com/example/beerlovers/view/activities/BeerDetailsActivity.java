@@ -2,6 +2,7 @@ package com.example.beerlovers.view.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ public class BeerDetailsActivity extends AppCompatActivity {
 
     public static final String BEER_KEY = "beer-key";
     public static final String BEER_FROM_DB_KEY = "beer-from-db-key";
+    public static final String FROM = "FROM";
+
     private Beer mBeer;
     private DBBeer mDBBeer;
     private ActivityBeerBinding mBinding;
@@ -91,9 +94,9 @@ public class BeerDetailsActivity extends AppCompatActivity {
                 mBinding.content.tvAbv.setVisibility(View.GONE);
                 mBinding.content.tvAbv.setVisibility(View.GONE);
             }
-            if (mBeer.getIsRetired().equalsIgnoreCase("N"))
+            if (mBeer.getIsRetired() == null || mBeer.getIsRetired().equalsIgnoreCase("N"))
                 mBinding.content.tvRetired.setVisibility(View.GONE);
-            if (mBeer.getIsOrganic().equalsIgnoreCase("N"))
+            if (mBeer.getIsOrganic() == null || mBeer.getIsOrganic().equalsIgnoreCase("N"))
                 mBinding.content.tvOrganic.setVisibility(View.GONE);
 
             if (mBeer.getStyle() != null) {
@@ -267,5 +270,16 @@ public class BeerDetailsActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mViewModel.checkBeer();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (getIntent() != null && getIntent().hasExtra(FROM)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        } else
+            super.onBackPressed();
     }
 }

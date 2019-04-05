@@ -54,6 +54,9 @@ public class Beer implements Parcelable {
         }
     };
 
+    public Beer() {
+    }
+
     public String getId() {
         return id;
     }

@@ -6,7 +6,6 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.beerlovers.model.Beer;
 import com.example.beerlovers.model.DBBeer;
 
 import java.util.concurrent.atomic.AtomicBoolean;

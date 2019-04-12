@@ -1,19 +1,13 @@
 package com.example.beerlovers.view.adapters;
 
 import android.arch.paging.PagedListAdapter;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.beerlovers.R;
 import com.example.beerlovers.databinding.ItemListBeerBinding;
 import com.example.beerlovers.model.Beer;
-import com.example.beerlovers.model.NetworkState;
-import com.example.beerlovers.utils.CircleTransform;
-import com.squareup.picasso.Picasso;
 
 public class BeersPagedListAdapter extends PagedListAdapter<Beer, RecyclerView.ViewHolder> {
 

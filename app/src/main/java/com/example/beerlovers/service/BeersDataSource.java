@@ -9,7 +9,6 @@ import com.example.beerlovers.BuildConfig;
 import com.example.beerlovers.model.BaseResponse;
 import com.example.beerlovers.model.Beer;
 import com.example.beerlovers.model.NetworkState;
-import com.example.beerlovers.service.RequestService;
 
 import java.util.ArrayList;
 import java.util.List;

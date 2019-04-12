@@ -10,7 +10,6 @@ import com.example.beerlovers.BuildConfig;
 import com.example.beerlovers.model.BaseResponse;
 import com.example.beerlovers.model.Beer;
 
-
 import retrofit2.Call;
 
 

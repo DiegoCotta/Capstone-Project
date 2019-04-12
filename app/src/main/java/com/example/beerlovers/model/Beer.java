@@ -5,7 +5,6 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 
-
 import java.util.List;
 
 

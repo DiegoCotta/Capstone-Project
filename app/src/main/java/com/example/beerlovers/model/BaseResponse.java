@@ -1,7 +1,5 @@
 package com.example.beerlovers.model;
 
-import java.util.List;
-
 public class BaseResponse<T> {
     private int currentPage;
     private int numberOfPages;

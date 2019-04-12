@@ -11,8 +11,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        resValue "string", "AD_KEY", '"ca-app-pub-3940256099942544~3347511713"'
-        buildConfigField "String", "API_KEY", '"345d6001c799b3442d7dfa5b1c1b7686"'
+        resValue "string", "AD_KEY", '"{AD_KEY}"'
+        buildConfigField "String", "API_KEY", '"{API_KEY}"'
         buildConfigField "String", "SERVICE_URL", '"https://api.brewerydb.com/v2/"'
     }
     buildTypes {

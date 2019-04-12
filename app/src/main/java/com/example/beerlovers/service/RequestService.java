@@ -4,7 +4,6 @@ import com.example.beerlovers.BuildConfig;
 import com.example.beerlovers.model.BaseResponse;
 import com.example.beerlovers.model.Beer;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.List;
@@ -15,7 +14,6 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
 

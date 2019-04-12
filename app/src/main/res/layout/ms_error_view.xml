@@ -37,7 +37,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:background="@color/colorPrimary"
-            android:text="Retry"
+            android:text="@string/retry"
             android:textSize="18sp"
             android:textColor="@color/colorPrimaryText"
             app:layout_constraintEnd_toEndOf="parent"

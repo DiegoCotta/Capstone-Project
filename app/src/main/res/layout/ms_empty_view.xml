@@ -19,7 +19,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="@color/colorAccentText"
             android:textSize="20sp"
-            android:text="No beer was found" />
+            android:text="@string/no_beer_was_found" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

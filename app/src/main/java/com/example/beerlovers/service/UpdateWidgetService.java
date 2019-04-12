@@ -2,17 +2,14 @@ package com.example.beerlovers.service;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 
 import com.example.beerlovers.AppWidget;
 import com.example.beerlovers.BuildConfig;
 import com.example.beerlovers.model.BaseResponse;
 import com.example.beerlovers.model.Beer;
 
-import java.io.IOException;
 
 import retrofit2.Call;
 

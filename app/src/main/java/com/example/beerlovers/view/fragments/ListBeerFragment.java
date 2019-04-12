@@ -5,12 +5,14 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.paging.PagedList;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
@@ -58,6 +60,7 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
     private String querySearch = "";
     ListType type;
     private boolean isSearch;
+
 
     public static ListBeerFragment newInstance(ListType type) {
         Bundle args = new Bundle();
@@ -263,19 +266,36 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
     }
 
     @Override
-    public void onDeleteClick(DBBeer beer) {
-        if (type == ListType.TASTED) {
-            if (beer.isFavorite()) {
-                beer.setTasted(false);
-                mViewModel.updateBeer(beer);
-            } else
-                mViewModel.removeBeer(beer);
-        } else if (type == ListType.FAVORITE) {
-            if (beer.isTasted()) {
-                beer.setFavorite(false);
-                mViewModel.updateBeer(beer);
-            } else
-                mViewModel.removeBeer(beer);
-        }
+    public void onDeleteClick(final DBBeer beer) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(String.format(getString(R.string.dialog_delete),beer.getName(),type.toString()));
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (type == ListType.TASTED) {
+                    if (beer.isFavorite()) {
+                        beer.setTasted(false);
+                        mViewModel.updateBeer(beer);
+                    } else
+                        mViewModel.removeBeer(beer);
+                } else if (type == ListType.FAVORITE) {
+                    if (beer.isTasted()) {
+                        beer.setFavorite(false);
+                        mViewModel.updateBeer(beer);
+                    } else
+                        mViewModel.removeBeer(beer);
+                }
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
+
+
 }

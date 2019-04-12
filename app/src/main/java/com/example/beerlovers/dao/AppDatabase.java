@@ -28,15 +28,15 @@ public abstract class AppDatabase extends RoomDatabase {
         if (sInstance == null) {
             synchronized (LOCK) {
                 Log.d(LOG_TAG, "Creating new database instance");
-                if (!isRunningTest())
+//                if (!isRunningTest())
                     sInstance = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, AppDatabase.DATABASE_NAME)
                             .build();
-                else {
-                    sInstance = Room.inMemoryDatabaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class)
-                            .build();
-                }
+//                else {
+//                    sInstance = Room.inMemoryDatabaseBuilder(context.getApplicationContext(),
+//                            AppDatabase.class)
+//                            .build();
+//                }
             }
         }
         Log.d(LOG_TAG, "Getting the database instance");

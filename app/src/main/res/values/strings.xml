@@ -19,4 +19,7 @@
     <string name="food">Food Pairings:</string>
     <string name="breweries">Breweries:</string>
     <string name="widget_text">"Style: %s    IBU: %s    ABV: %s%%"</string>
+    <string name="dialog_delete">"Are you sure that you want to remove %s from list %s?"</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

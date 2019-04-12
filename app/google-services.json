@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "99287445878",
+    "firebase_url": "https://capstone-project-4128d.firebaseio.com",
+    "project_id": "capstone-project-4128d",
+    "storage_bucket": "capstone-project-4128d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99287445878:android:08ee1cdbfe1609ee",
+        "android_client_info": {
+          "package_name": "com.example.beerlovers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99287445878-5opu2j3hpt0qok9e7g3f71gu9vb44nvt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.beerlovers",
+            "certificate_hash": "7840f722d915b4e6593f4d5723a74da0631ea428"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuLJxMQ73Yxjo_H2zyzVFPr3T8bXVFumg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99287445878-oq8i7pniorlp41nf1t4nued1qkcf50c9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

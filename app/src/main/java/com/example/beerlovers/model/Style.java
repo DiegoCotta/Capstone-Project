@@ -26,9 +26,9 @@ public class Style implements Parcelable {
     private String createDate;
     private String updateDate;
 
-
+    public Style(){
+    }
     // Getter Methods
-
     protected Style(Parcel in) {
         id = in.readFloat();
         categoryId = in.readFloat();

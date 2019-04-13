@@ -23,5 +23,4 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="no_beer_was_found">No beer was found</string>
-    <string name="retry">Retry</string>
 </resources>

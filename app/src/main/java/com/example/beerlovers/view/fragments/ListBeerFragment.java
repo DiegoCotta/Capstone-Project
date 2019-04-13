@@ -268,21 +268,15 @@ public class ListBeerFragment extends Fragment implements BeerViewHolder.BeersAd
     @Override
     public void onDeleteClick(final DBBeer beer) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(String.format(getString(R.string.dialog_delete),beer.getName(),type.toString()));
+        builder.setMessage(String.format(getString(R.string.dialog_delete), beer.getName(), type.toString()));
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if (type == ListType.TASTED) {
-                    if (beer.isFavorite()) {
-                        beer.setTasted(false);
-                        mViewModel.updateBeer(beer);
-                    } else
-                        mViewModel.removeBeer(beer);
+                    beer.setTasted(false);
+                    mViewModel.updateBeer(beer);
                 } else if (type == ListType.FAVORITE) {
-                    if (beer.isTasted()) {
-                        beer.setFavorite(false);
-                        mViewModel.updateBeer(beer);
-                    } else
-                        mViewModel.removeBeer(beer);
+                    beer.setFavorite(false);
+                    mViewModel.updateBeer(beer);
                 }
                 dialog.dismiss();
             }

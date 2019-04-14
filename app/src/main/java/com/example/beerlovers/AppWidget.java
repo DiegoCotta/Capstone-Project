@@ -71,8 +71,12 @@ public class AppWidget extends AppWidgetProvider {
 
         Intent nextIntent = new Intent(context, UpdateWidgetService.class);
         nextIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        PendingIntent nextPendingIntent = PendingIntent.getService(context, appWidgetId, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
+        PendingIntent nextPendingIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            nextPendingIntent = PendingIntent.getForegroundService(context, appWidgetId, nextIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        } else {
+             nextPendingIntent = PendingIntent.getService(context, appWidgetId, nextIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        }
 
         views.setOnClickPendingIntent(R.id.ibNext, nextPendingIntent);
         // Instruct the widget manager to update the widget

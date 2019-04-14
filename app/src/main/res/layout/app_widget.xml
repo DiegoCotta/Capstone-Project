@@ -67,7 +67,8 @@
             android:background="@color/colorWhite"
             android:padding="5dp"
             android:src="@drawable/ic_arrow_forward"
-            android:tint="@color/colorAccentText" />
+            android:tint="@color/colorAccentText"
+            android:contentDescription="@string/next_random_beer" />
 
     </LinearLayout>
 

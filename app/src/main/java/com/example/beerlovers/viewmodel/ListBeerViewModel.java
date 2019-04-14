@@ -90,18 +90,6 @@ public class ListBeerViewModel extends AndroidViewModel {
         return beersLiveData;
     }
 
-    public void removeBeer(final DBBeer beer) {
-        if (!beer.isFavorite() && !beer.isTasted()) {
-            AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                @Override
-                public void run() {
-                    database.beerDao().deleteBeer(beer);
-                }
-            });
-        }
-
-    }
-
     public void updateBeer(final DBBeer beer) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override

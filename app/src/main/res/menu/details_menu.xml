@@ -6,5 +6,6 @@
         android:icon="@drawable/ic_favorite_empty"
         android:title="@string/title_favorite"
         android:clickable="true"
+        android:contentDescription="@string/add_beer_favorites"
         app:showAsAction="always"/>
 </menu>

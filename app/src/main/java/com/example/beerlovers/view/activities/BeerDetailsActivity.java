@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +22,7 @@ import com.example.beerlovers.model.DBBeer;
 import com.example.beerlovers.viewmodel.BeerDetailsViewModel;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
+import android.support.v4.view.MenuItemCompat;
 
 public class BeerDetailsActivity extends AppCompatActivity {
 
@@ -251,14 +253,18 @@ public class BeerDetailsActivity extends AppCompatActivity {
                     if (beer.isTasted()) {
                         mBinding.fab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(BeerDetailsActivity.this, R.color.colorTastedBackground)));
                         mBinding.fab.setImageResource(R.drawable.ic_checked);
+                        mBinding.fab.setContentDescription(getString(R.string.remove_beer_tasted));
                     } else {
                         mBinding.fab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(BeerDetailsActivity.this, R.color.colorAccent)));
                         mBinding.fab.setImageResource(R.drawable.ic_add);
+                        mBinding.fab.setContentDescription(getString(R.string.add_beer_tasted));
                     }
                     if (beer.isFavorite()) {
                         menu.getItem(0).setIcon(ContextCompat.getDrawable(BeerDetailsActivity.this, R.drawable.ic_favorite_full));
+                        MenuItemCompat.setContentDescription(menu.getItem(0), getString(R.string.remove_beer_favorites));
                     } else {
                         menu.getItem(0).setIcon(ContextCompat.getDrawable(BeerDetailsActivity.this, R.drawable.ic_favorite_empty));
+                        MenuItemCompat.setContentDescription(menu.getItem(0), getString(R.string.add_beer_favorites));
                     }
                 }
 

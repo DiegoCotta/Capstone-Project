@@ -23,4 +23,11 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="no_beer_was_found">No beer was found</string>
+    <string name="remove_beer">Remove beer</string>
+    <string name="next_random_beer">Next random beer</string>
+    <string name="add_beer_favorites">Add beer on favorites</string>
+    <string name="remove_beer_favorites">Remove beer from favorites</string>
+    <string name="search_beer">Search beer</string>
+    <string name="add_beer_tasted">Add beer on Tasted</string>
+    <string name="remove_beer_tasted">Remove beer from Tasted</string>
 </resources>

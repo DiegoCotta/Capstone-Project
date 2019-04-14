@@ -46,6 +46,7 @@ public class BeerDetailsViewModel extends AndroidViewModel {
                     database.beerDao().insert(b);
                 }
             });
+
         } else {
             dbBeer.getValue().setFavorite(!dbBeer.getValue().isFavorite());
             bundle.putString("beer", dbBeer.getValue().getName());

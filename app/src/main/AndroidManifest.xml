@@ -47,6 +47,7 @@
         </receiver>
         <service
             android:name=".service.UpdateWidgetService"
+            android:exported="false"
             android:enabled="true" />
 
     </application>

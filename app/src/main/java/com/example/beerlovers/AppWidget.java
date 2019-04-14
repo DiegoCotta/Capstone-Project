@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
@@ -81,8 +82,19 @@ public class AppWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         //Start the intent service update widget action, the service takes care of updating the widgets UI
-        for (int appWidgetId : appWidgetIds)
-            UpdateWidgetService.startAction(context, appWidgetId);
+        for (int appWidgetId : appWidgetIds) {
+            Intent intent = new Intent(context.getApplicationContext(),
+                    UpdateWidgetService.class);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+
+            // Update the widgets via the service
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(intent);
+
+            } else {
+                context.startService(intent);
+            }
+        }
     }
 
     public static void updateWidget(Context context, AppWidgetManager appWidgetManager,
